@@ -30,6 +30,7 @@ export default function Calendar({onChange = () => {}, value = moment()}) {
   const [days, setDays] = useState(() => getDaysArrayByMonth(selectMonth));
   const [monthRef, setMonthRef] = useState();
   const [dateRef, setDateRef] = useState();
+  console.log('render');
 
   useEffect(() => {
     setDays(getDaysArrayByMonth(selectMonth));
@@ -113,10 +114,10 @@ export default function Calendar({onChange = () => {}, value = moment()}) {
                 style={{
                   fontSize: 16,
                   lineHeight: 24,
-                  fontWeight: '500',
+                  fontWeight: selectMonth === index + 1 ? 'bold' : '500',
                   color:
                     selectMonth === index + 1
-                      ? '#212525'
+                      ? '#FF6E50'
                       : 'rgba(4, 4, 5, 0.5)',
                 }}>
                 {month}
