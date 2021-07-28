@@ -2,7 +2,7 @@
 import moment from 'moment';
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-import Calendar from '../../Components/Calendar';
+import Calendar from '../../Components/Calendar/index';
 import OverviewCard from './OverviewCard';
 import TaskList from './TaskList';
 
