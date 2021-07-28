@@ -15,6 +15,7 @@ const MONTHS = moment.months();
 const MONTH_ITEM_WIDTH = 110;
 
 export default function MonthSelect({onChange, value}) {
+  console.log(value);
   const [monthRef, setMonthRef] = useState();
   const [selectMonth, setSelectMonth] = useState(value);
   const safeOnChange = useRef(onChange);
@@ -97,5 +98,4 @@ MonthSelect.defaultProps = {
 
 MonthSelect.propTypes = {
   onChange: PropTypes.func.isRequired,
-  value: PropTypes.number,
 };
