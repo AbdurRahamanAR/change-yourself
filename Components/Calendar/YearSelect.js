@@ -117,8 +117,8 @@ const styles = StyleSheet.create({
   yearText: {
     fontSize: 16,
     lineHeight: 24,
-    fontWeight: 'bold',
     color: 'rgba(33, 37, 37, 1)',
+    fontFamily: 'Gilroy-Bold',
   },
 });
 

@@ -27,7 +27,13 @@ export default function OverviewCard() {
           color="#fff"
           shadowColor="#FF6E50"
           bgColor="#FF6E50">
-          <Text style={{fontSize: 15.21, lineHeight: 17, color: '#fff'}}>
+          <Text
+            style={{
+              fontSize: 15.21,
+              lineHeight: 17,
+              color: '#fff',
+              fontFamily: 'Gilroy-Medium',
+            }}>
             70%
           </Text>
         </PercentageCircle>
@@ -38,12 +44,18 @@ export default function OverviewCard() {
             fontSize: 16,
             color: '#fff',
             lineHeight: 17,
-            fontWeight: 'bold',
+            fontFamily: 'Gilroy-Sami-Bold',
           }}>
           Your daily goals are {'\n'}almost done
         </Text>
         <Text
-          style={{marginTop: 6, fontSize: 11, lineHeight: 17, color: '#fff'}}>
+          style={{
+            marginTop: 6,
+            fontSize: 11,
+            lineHeight: 17,
+            color: '#fff',
+            fontFamily: 'Gilroy-Regular',
+          }}>
           4 of 10 completed
         </Text>
       </View>

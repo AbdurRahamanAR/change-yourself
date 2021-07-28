@@ -16,8 +16,7 @@ export default function Home() {
           lineHeight: 29,
           color: '#212525',
           marginBottom: 20,
-          fontWeight: 'bold',
-          fontFamily: 'Gilroy-Bold',
+          fontFamily: 'Gilroy-Sami-Bold',
           marginTop: 17,
         }}>
         Let’s make some {'\n'}great habit together
