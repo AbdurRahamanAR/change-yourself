@@ -8,7 +8,7 @@ import {
   Dimensions,
   StyleSheet,
 } from 'react-native';
-import {CURRENT_YEAR, CURRENT_MONTH} from '.';
+import {CURRENT_YEAR, CURRENT_MONTH, TODAY_DATE} from '.';
 
 export function getDaysArrayByMonth(monthNo, year) {
   var daysInMonth = moment(`${year} ${monthNo}`, 'YYYY MM').daysInMonth();
@@ -136,12 +136,13 @@ const styles = StyleSheet.create({
 DaySelect.defaultProps = {
   month: CURRENT_MONTH,
   year: CURRENT_YEAR,
+  value: TODAY_DATE,
   onChange: () => {},
 };
 
 DaySelect.propTypes = {
-  month: PropTypes.number.isRequired,
-  year: PropTypes.number.isRequired,
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.number.isRequired,
+  month: PropTypes.number,
+  year: PropTypes.number,
+  onChange: PropTypes.func,
+  value: PropTypes.number,
 };

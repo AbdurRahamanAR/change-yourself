@@ -1,7 +1,9 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
-import {View, Text} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {View, Text, TouchableOpacity} from 'react-native';
+import RBSheet from 'react-native-raw-bottom-sheet';
 import Icon from '../../Components/Icon';
+import TaskDetails from './TaskDetails';
 
 const taskList = [
   {
@@ -25,11 +27,20 @@ const taskList = [
 ];
 
 export default function TaskList() {
+  const refRBSheet = useRef();
+  const [selectedTask, setSelectedTask] = useState();
+
   return (
     <View style={{marginTop: 25}}>
       {taskList.map((task, index) => {
         return (
-          <View key={task.id} style={{marginTop: index === 0 ? 0 : 15}}>
+          <TouchableOpacity
+            onPress={() => {
+              setSelectedTask(task);
+              refRBSheet.current.open();
+            }}
+            key={task.id}
+            style={{marginTop: index === 0 ? 0 : 15}}>
             <View
               style={{
                 display: 'flex',
@@ -78,9 +89,29 @@ export default function TaskList() {
                 }}
               />
             </View>
-          </View>
+          </TouchableOpacity>
         );
       })}
+      <RBSheet
+        ref={refRBSheet}
+        closeOnDragDown={true}
+        height={449}
+        customStyles={{
+          wrapper: {
+            backgroundColor: 'rgba(33, 37, 37, 0.5)',
+          },
+          draggableIcon: {
+            width: 50,
+            backgroundColor: '#F5F3FC',
+            height: 3,
+          },
+          container: {
+            borderTopLeftRadius: 20,
+            borderTopRightRadius: 20,
+          },
+        }}>
+        <TaskDetails task={selectedTask} />
+      </RBSheet>
     </View>
   );
 }
