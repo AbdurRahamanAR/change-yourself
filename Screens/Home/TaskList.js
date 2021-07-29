@@ -96,6 +96,7 @@ export default function TaskList() {
         ref={refRBSheet}
         closeOnDragDown={true}
         height={449}
+        openDuration={500}
         customStyles={{
           wrapper: {
             backgroundColor: 'rgba(33, 37, 37, 0.5)',

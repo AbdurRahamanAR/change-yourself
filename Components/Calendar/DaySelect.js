@@ -26,7 +26,12 @@ export function getDaysArrayByMonth(monthNo, year) {
 const DAY_BUTTON_WIDTH = 40;
 const DAY_BUTTON_MARGIN = 13;
 
-export default function DaySelect({month, year, value, onChange}) {
+export default function DaySelect({
+  month = CURRENT_MONTH,
+  year = CURRENT_YEAR,
+  value = TODAY_DATE,
+  onChange,
+}) {
   const [selectDay, setSelectDay] = useState(value);
   const [dateRef, setDateRef] = useState();
   const [days, setDays] = useState([]);

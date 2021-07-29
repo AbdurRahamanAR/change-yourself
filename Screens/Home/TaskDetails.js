@@ -99,7 +99,6 @@ export default function TaskDetails({task}) {
         }}>
         Activity
       </Text>
-      {/* <Text>{JSON.stringify(task, null, 2)}</Text> */}
       <DaySelect />
     </View>
   );
