@@ -7,6 +7,7 @@ import PercentageCircle from '../../Components/ProgressCricle';
 import SummaryCard from '../Home/SummaryCard';
 
 export default function HabitDetails({task}) {
+  const strength = Math.round((task.continue / task.streak) * 100);
   return (
     <View style={{paddingTop: 7, paddingHorizontal: 16, paddingBottom: 32}}>
       <View
@@ -47,7 +48,9 @@ export default function HabitDetails({task}) {
             color: '#212525',
             marginLeft: 6,
           }}>
-          Repeat everyday
+          {task.frequency.length === 7
+            ? 'Repeat everyday'
+            : `${task.frequency.length} days in week`}
         </Text>
       </View>
       <View
@@ -76,19 +79,19 @@ export default function HabitDetails({task}) {
               color: '#212525',
               marginTop: 5,
             }}>
-            {task.finised}
+            {strength}%
           </Text>
         </View>
         <PercentageCircle
-          percent={70}
+          percent={strength}
           radius={22.5}
           borderWidth={4}
-          color="#f5f3fc"
-          shadowColor="#FF6E50"
+          color="#FF6E50"
+          shadowColor="#f5f3fc"
           bgColor="#FFF"
         />
       </View>
-      <SummaryCard />
+      <SummaryCard currentStreak={task.continue} bestStreak={task.bestStreak} />
       <Text
         style={{
           fontFamily: 'Gilroy-Bold',

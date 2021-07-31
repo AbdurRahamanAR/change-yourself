@@ -2,7 +2,7 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 
-export default function SummaryCard() {
+export default function SummaryCard({currentStreak, bestStreak}) {
   return (
     <View
       style={{
@@ -22,7 +22,7 @@ export default function SummaryCard() {
             lineHeight: 23,
             color: '#FF6E50',
           }}>
-          10 Days
+          {currentStreak} Days
         </Text>
         <Text
           style={{
@@ -44,7 +44,7 @@ export default function SummaryCard() {
             lineHeight: 23,
             color: '#FF6E50',
           }}>
-          21 Days
+          {bestStreak} Days
         </Text>
         <Text
           style={{

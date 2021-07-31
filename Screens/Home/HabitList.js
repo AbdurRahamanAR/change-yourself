@@ -18,7 +18,7 @@ export let domeData = [
     title: 'Yoga',
     streak: 21,
     frequency: [1, 2, 5, 6],
-    bestStreak: 31,
+    bestStreak: 0,
     continue: 0,
     completStatus: {},
   },
@@ -63,6 +63,9 @@ export default function HabitList({calenderDate}) {
           dateListData = item?.completStatus?.[YEAR]?.[MONTH];
         }
         item.continue = item.continue + 1;
+        if (item.continue > item.bestStreak) {
+          item.bestStreak = item.continue;
+        }
         dateListData[DATE - 1] = dateListData[DATE - 1] ? false : true;
         item.completStatus = {
           ...item.completStatus,
