@@ -7,7 +7,7 @@ import DaySelect from './DaySelect';
 import MonthSelect from './MonthSelect';
 import YearSelect from './YearSelect';
 
-const TODAY_MOMENT = moment();
+export const TODAY_MOMENT = moment();
 export const CURRENT_MONTH = TODAY_MOMENT.month() + 1;
 export const CURRENT_YEAR = TODAY_MOMENT.year();
 export const TODAY_DATE = TODAY_MOMENT.date();

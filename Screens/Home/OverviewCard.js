@@ -4,6 +4,8 @@ import {View, Text} from 'react-native';
 
 import PercentageCircle from '../../Components/ProgressCricle';
 
+//TODO: Calculate complet data dynamically
+
 export default function OverviewCard() {
   return (
     <View

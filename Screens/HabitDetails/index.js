@@ -4,9 +4,9 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import DaySelect from '../../Components/Calendar/DaySelect';
 import Icon from '../../Components/Icon';
 import PercentageCircle from '../../Components/ProgressCricle';
-import SummaryCard from './SummaryCard';
+import SummaryCard from '../Home/SummaryCard';
 
-export default function TaskDetails({task}) {
+export default function HabitDetails({task}) {
   return (
     <View style={{paddingTop: 7, paddingHorizontal: 16, paddingBottom: 32}}>
       <View

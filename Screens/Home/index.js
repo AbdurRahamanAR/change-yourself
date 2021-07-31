@@ -3,11 +3,14 @@ import moment from 'moment';
 import React, {useState, useRef} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
+
 import Calendar from '../../Components/Calendar/index';
+import AddHabitScreen from '../AddHabit';
+import HabitList from './HabitList';
 import OverviewCard from './OverviewCard';
-import TaskList from './TaskList';
 
 export default function Home() {
+  //TODO reset task contrue
   const [selectDate, setSelectDate] = useState(moment());
   const refRBSheet = useRef();
 
@@ -31,7 +34,7 @@ export default function Home() {
           setSelectDate(v);
         }}
       />
-      <TaskList />
+      <HabitList calenderDate={selectDate} />
       <TouchableOpacity
         onPress={() => {
           refRBSheet.current.open();
@@ -51,7 +54,7 @@ export default function Home() {
       <RBSheet
         ref={refRBSheet}
         closeOnDragDown={true}
-        height={401}
+        height={551}
         openDuration={500}
         customStyles={{
           wrapper: {
@@ -67,9 +70,7 @@ export default function Home() {
             borderTopRightRadius: 20,
           },
         }}>
-        <View>
-          <Text>Form</Text>
-        </View>
+        <AddHabitScreen />
       </RBSheet>
     </View>
   );
