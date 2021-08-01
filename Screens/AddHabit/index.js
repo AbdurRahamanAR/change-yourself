@@ -42,7 +42,7 @@ export default function AddHabitScreen() {
 
       <TouchableOpacity
         onPress={() => {
-          console.log('yea');
+          // console.log('yea');
         }}
         style={{
           backgroundColor: '#FF6E50',

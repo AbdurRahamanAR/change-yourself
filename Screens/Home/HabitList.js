@@ -1,44 +1,13 @@
 /* eslint-disable react-native/no-inline-styles */
-import moment from 'moment';
 import React, {useMemo, useRef, useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import {
-  CURRENT_MONTH,
-  CURRENT_YEAR,
-  TODAY_DATE,
-  TODAY_MOMENT,
-} from '../../Components/Calendar';
+import {useHabitList} from '../../Components/HabitProvider';
 import Icon from '../../Components/Icon';
 import HabitDetails from '../HabitDetails';
 
-export let domeData = [
-  {
-    id: 1,
-    title: 'Yoga',
-    streak: 21,
-    frequency: [0, 1, 2, 3, 4, 5, 6],
-    bestStreak: 0,
-    continue: 0,
-    completStatus: {},
-  },
-];
-
-const getLastFrequencyDate = frequency => {
-  const todayInWeek = TODAY_MOMENT.day();
-  const lessFrequencyDates = frequency.filter(item => item < todayInWeek);
-  const lastFrequencyDate = Math.max(...lessFrequencyDates);
-  const deff = todayInWeek - lastFrequencyDate;
-
-  return moment(
-    `${TODAY_DATE - deff}/${CURRENT_MONTH}/${CURRENT_YEAR}`,
-    'DD/MM/YYYY',
-  );
-};
-
 const isDateInFrequency = (frequency, date) => {
   const todayInWeek = date.day();
-  console.log(todayInWeek, frequency);
   return frequency.includes(todayInWeek);
 };
 
@@ -52,57 +21,16 @@ export default function HabitList({calenderDate}) {
   const DATE = useMemo(() => {
     return calenderDate.date();
   }, [calenderDate]);
-  const [taskList, setTaskList] = useState(domeData);
   const refRBSheet = useRef();
   const [selectedTask, setSelectedTask] = useState();
-
-  const completeTask = taskId => {
-    const newTaskList = taskList.map(item => {
-      if (item.id === taskId) {
-        let dateListData = [];
-        if (item?.completStatus?.[YEAR]?.[MONTH]) {
-          dateListData = item?.completStatus?.[YEAR]?.[MONTH];
-        }
-        item.continue = item.continue + 1;
-        if (item.continue > item.bestStreak) {
-          item.bestStreak = item.continue;
-        }
-        dateListData[DATE - 1] = dateListData[DATE - 1] ? false : true;
-        item.completStatus = {
-          ...item.completStatus,
-          [YEAR]: {
-            ...item.completStatus?.[YEAR],
-            [MONTH]: dateListData,
-          },
-        };
-      }
-      return item;
-    });
-    setTaskList(newTaskList);
-  };
+  const {habitList, checkHabit} = useHabitList();
 
   return (
     <View style={{marginTop: 25}}>
-      {taskList.map((task, index) => {
+      {habitList.map((task, index) => {
         const complete = task.completStatus[YEAR]?.[MONTH]?.[DATE - 1];
         const todayHave = isDateInFrequency(task.frequency, calenderDate);
-        const lastFrequencyDate = getLastFrequencyDate(task.frequency);
-        const lastDayNotComplete =
-          task.completStatus[lastFrequencyDate.year()]?.[
-            lastFrequencyDate.month()
-          ]?.[lastFrequencyDate.date() - 1];
 
-        if (lastDayNotComplete && task.continue > 0) {
-          setTaskList(state => {
-            return state.map(item => {
-              if (item.id === task.id) {
-                item.continue = 0;
-              }
-              return item;
-            });
-          });
-        }
-        console.log(todayHave);
         return !todayHave ? (
           <></>
         ) : (
@@ -121,7 +49,7 @@ export default function HabitList({calenderDate}) {
               }}>
               <TouchableOpacity
                 onPress={v => {
-                  completeTask(task.id);
+                  checkHabit(task.id, calenderDate);
                 }}>
                 <Icon
                   name="correct-square"
@@ -161,6 +89,7 @@ export default function HabitList({calenderDate}) {
               <View
                 style={{
                   width: `${(task.continue / task.streak) * 100}%`,
+                  maxWidth: '100%',
                   backgroundColor: '#FF6E50',
                   height: 5,
                   borderRadius: 32,

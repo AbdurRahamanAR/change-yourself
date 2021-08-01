@@ -24,7 +24,6 @@ export default function HabitColorPickerFormItem({style = {}}) {
       {colors.map(item => (
         <TouchableOpacity
           onPress={event => {
-            console.log(item);
             setActiveColor(item);
           }}
           key={item}>
