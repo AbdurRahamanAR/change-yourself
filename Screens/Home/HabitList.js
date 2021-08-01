@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import moment from 'moment';
 import React, {useMemo, useRef, useState} from 'react';
-import {View, Text, TouchableOpacity, ToastAndroid} from 'react-native';
+import {View, Text, TouchableOpacity} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {
   CURRENT_MONTH,
@@ -17,7 +17,7 @@ export let domeData = [
     id: 1,
     title: 'Yoga',
     streak: 21,
-    frequency: [1, 2, 5, 6],
+    frequency: [0, 1, 2, 3, 4, 5, 6],
     bestStreak: 0,
     continue: 0,
     completStatus: {},
@@ -38,6 +38,7 @@ const getLastFrequencyDate = frequency => {
 
 const isDateInFrequency = (frequency, date) => {
   const todayInWeek = date.day();
+  console.log(todayInWeek, frequency);
   return frequency.includes(todayInWeek);
 };
 
@@ -101,7 +102,10 @@ export default function HabitList({calenderDate}) {
             });
           });
         }
-        return (
+        console.log(todayHave);
+        return !todayHave ? (
+          <></>
+        ) : (
           <TouchableOpacity
             onPress={() => {
               setSelectedTask(task);
@@ -117,15 +121,7 @@ export default function HabitList({calenderDate}) {
               }}>
               <TouchableOpacity
                 onPress={v => {
-                  if (todayHave) {
-                    completeTask(task.id);
-                  } else {
-                    ToastAndroid.showWithGravity(
-                      'TOday is not in frequency',
-                      ToastAndroid.SHORT,
-                      ToastAndroid.BOTTOM,
-                    );
-                  }
+                  completeTask(task.id);
                 }}>
                 <Icon
                   name="correct-square"
