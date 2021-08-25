@@ -1,17 +1,11 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow strict-local
- */
-
 import React from 'react';
+import Navigation from './navigation/index';
 import {
   SafeAreaView,
   ScrollView,
   StatusBar,
   useColorScheme,
+  View,
 } from 'react-native';
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
@@ -25,11 +19,9 @@ const App = () => {
   };
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-
-      <Home />
-    </SafeAreaView>
+    <View style={{flex: 1, height: '100%'}}>
+      <Navigation />
+    </View>
   );
 };
 

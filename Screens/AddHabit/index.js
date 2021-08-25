@@ -17,27 +17,27 @@ export const habit_types = {
   DONT: 'dont',
 };
 
-    // {
-    //   id: 1,
-    //   title: 'Yoga',
-    //   streak: 21,
-    //   type: "do"
-    //   frequency: [0, 1, 2, 3, 4, 5, 6],
-    //   bestStreak: 0,
-    //   continue: 20,
-    //   completStatus: {
-    //     2021: {
-    //       7: lastmonth,
-    //       8: [true, false],
-    //     },
-    //   },
-    // },
+// {
+//   id: 1,
+//   title: 'Yoga',
+//   streak: 21,
+//   type: "do"
+//   frequency: [0, 1, 2, 3, 4, 5, 6],
+//   bestStreak: 0,
+//   continue: 20,
+//   completStatus: {
+//     2021: {
+//       7: lastmonth,
+//       8: [true, false],
+//     },
+//   },
+// },
 
 export default function AddHabitScreen() {
   const initialValues = {
     name: '',
     type: habit_types.DO,
-    frequency: []
+    frequency: [],
   };
 
   const createHabit = values => {
@@ -84,7 +84,10 @@ export default function AddHabitScreen() {
               <Text style={[styles.titleText, {marginTop: 29}]}>
                 How often you want to do it?
               </Text>
-              <HabitDatePickerFormItem value={values.frequency} onChange={} style={{marginTop: 15}} />
+              <HabitDatePickerFormItem
+                value={values.frequency}
+                style={{marginTop: 15}}
+              />
             </View>
           </View>
 
