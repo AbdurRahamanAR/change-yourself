@@ -1,15 +1,9 @@
-/* eslint-disable react-native/no-inline-styles */
 import React, {useMemo, useRef, useState} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import {useHabitList} from '../../Components/HabitProvider';
+import {isDateInFrequency, useHabitList} from '../../Components/HabitProvider';
 import Icon from '../../Components/Icon';
 import HabitDetails from '../HabitDetails';
-
-const isDateInFrequency = (frequency, date) => {
-  const todayInWeek = date.day();
-  return frequency.includes(todayInWeek);
-};
 
 export default function HabitList({calenderDate}) {
   const YEAR = useMemo(() => {
@@ -26,11 +20,11 @@ export default function HabitList({calenderDate}) {
   const {habitList, checkHabit} = useHabitList();
 
   return (
-    <View style={{marginTop: 25}}>
+    <View style={styles.root}>
       {habitList.map((task, index) => {
         const complete = task.completStatus[YEAR]?.[MONTH]?.[DATE - 1];
         const todayHave = isDateInFrequency(task.frequency, calenderDate);
-
+        const marginTop = index === 0 ? 0 : 15;
         return !todayHave ? (
           <></>
         ) : (
@@ -40,13 +34,8 @@ export default function HabitList({calenderDate}) {
               refRBSheet.current.open();
             }}
             key={task.id}
-            style={{marginTop: index === 0 ? 0 : 15}}>
-            <View
-              style={{
-                display: 'flex',
-                flexDirection: 'row',
-                alignItems: 'flex-end',
-              }}>
+            style={{marginTop}}>
+            <View style={styles.habitContainer}>
               <TouchableOpacity
                 onPress={v => {
                   checkHabit(task.id, calenderDate);
@@ -58,41 +47,16 @@ export default function HabitList({calenderDate}) {
                 />
               </TouchableOpacity>
 
-              <Text
-                style={{
-                  marginLeft: 12,
-                  fontSize: 16,
-                  fontWeight: 'bold',
-                  color: '#212525',
-                  lineHeight: 24,
-                }}>
-                {task.title}
-              </Text>
-              <Text
-                style={{
-                  marginLeft: 'auto',
-                  color: 'rgba(33, 37, 37, 0.4)',
-                  fontSize: 12,
-                  lineHeight: 19,
-                }}>
+              <Text style={styles.title}>{task.title}</Text>
+              <Text style={styles.streakStatus}>
                 {task.continue}/{task.streak}
               </Text>
             </View>
-            <View
-              style={{
-                marginTop: 11,
-                width: '100%',
-                backgroundColor: '#F5F5F7',
-                height: 5,
-                borderRadius: 32,
-              }}>
+            <View style={styles.streakStatusProgressBar}>
               <View
                 style={{
+                  ...styles.streakStatusProgressBarProgress,
                   width: `${(task.continue / task.streak) * 100}%`,
-                  maxWidth: '100%',
-                  backgroundColor: '#FF6E50',
-                  height: 5,
-                  borderRadius: 32,
                 }}
               />
             </View>
@@ -123,3 +87,40 @@ export default function HabitList({calenderDate}) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    marginTop: 25,
+  },
+  habitContainer: {
+    display: 'flex',
+    flexDirection: 'row',
+    alignItems: 'flex-end',
+  },
+  title: {
+    marginLeft: 12,
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#212525',
+    lineHeight: 24,
+  },
+  streakStatus: {
+    marginLeft: 'auto',
+    color: 'rgba(33, 37, 37, 0.4)',
+    fontSize: 12,
+    lineHeight: 19,
+  },
+  streakStatusProgressBar: {
+    marginTop: 11,
+    width: '100%',
+    backgroundColor: '#F5F5F7',
+    height: 5,
+    borderRadius: 32,
+  },
+  streakStatusProgressBarProgress: {
+    maxWidth: '100%',
+    backgroundColor: '#FF6E50',
+    height: 5,
+    borderRadius: 32,
+  },
+});

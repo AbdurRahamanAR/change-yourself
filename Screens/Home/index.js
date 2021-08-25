@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import moment from 'moment';
 import React, {useState, useRef} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 
 import Calendar from '../../Components/Calendar/index';
@@ -17,15 +17,7 @@ export default function Home() {
   return (
     <HabitProvider>
       <View style={{backgroundColor: '#fff', height: 800, padding: 16}}>
-        <Text
-          style={{
-            fontSize: 24,
-            lineHeight: 29,
-            color: '#212525',
-            marginBottom: 20,
-            fontFamily: 'Gilroy-Sami-Bold',
-            marginTop: 17,
-          }}>
+        <Text style={styles.headText}>
           Let’s make some {'\n'}great habit together
         </Text>
         <OverviewCard />
@@ -40,22 +32,13 @@ export default function Home() {
           onPress={() => {
             refRBSheet.current.open();
           }}>
-          <Text
-            style={{
-              marginTop: 20,
-              fontWeight: 'bold',
-              fontSize: 16,
-              lineHeight: 20,
-              color: '#212525',
-            }}>
-            + Add a habit
-          </Text>
+          <Text style={styles.addHabitButText}>+ Add a habit</Text>
         </TouchableOpacity>
 
         <RBSheet
           ref={refRBSheet}
           closeOnDragDown={true}
-          height={551}
+          height={570}
           openDuration={500}
           customStyles={{
             wrapper: {
@@ -77,3 +60,21 @@ export default function Home() {
     </HabitProvider>
   );
 }
+
+const styles = StyleSheet.create({
+  headText: {
+    fontSize: 24,
+    lineHeight: 29,
+    color: '#212525',
+    marginBottom: 20,
+    fontFamily: 'Gilroy-Sami-Bold',
+    marginTop: 17,
+  },
+  addHabitButText: {
+    marginTop: 20,
+    fontWeight: 'bold',
+    fontSize: 16,
+    lineHeight: 20,
+    color: '#212525',
+  },
+});

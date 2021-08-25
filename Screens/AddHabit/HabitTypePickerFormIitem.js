@@ -2,58 +2,53 @@
 import React from 'react';
 import {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {habit_types} from '.';
 import Icon from '../../Components/Icon';
 
-export default function HabitTypePickerFormIitem({style = {}}) {
-  const [selectedType, setSelectedType] = useState(1);
+export default function HabitTypePickerFormIitem({
+  value,
+  onChange,
+  style = {},
+}) {
+  const [selectedType, setSelectedType] = useState(value);
 
   return (
     <View style={{flexDirection: 'row', ...style}}>
-      <TouchableOpacity onPress={() => setSelectedType(1)}>
-        <View
-          style={[
-            styles.button,
-            {
-              marginRight: 20,
-              borderWidth: selectedType === 1 ? 1.5 : 0,
-              borderColor: '#FF6E50',
-            },
-          ]}>
-          <Icon name="correct-filled" />
-          <Text
-            s
-            style={{
-              marginTop: 10,
-              color: '#212525',
-              fontFamily: 'gilroy-regular',
-              fontSize: 14,
+      {Object.keys(habit_types).map(item => {
+        const type = habit_types[item];
+        const icon =
+          type === habit_types.DO ? 'correct-filled' : 'wrong-filled';
+        const text = type === habit_types.DO ? 'To-do' : 'Not to-do';
+        return (
+          <TouchableOpacity
+            onPress={() => {
+              setSelectedType(type);
+              onChange(type);
             }}>
-            To-do
-          </Text>
-        </View>
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => setSelectedType(0)}>
-        <View
-          style={[
-            styles.button,
-            {
-              marginRight: 20,
-              borderWidth: selectedType === 0 ? 1.5 : 0,
-              borderColor: '#FF6E50',
-            },
-          ]}>
-          <Icon name="wrong-filled" />
-          <Text
-            style={{
-              marginTop: 10,
-              color: '#212525',
-              fontFamily: 'gilroy-regular',
-              fontSize: 14,
-            }}>
-            Not to-do
-          </Text>
-        </View>
-      </TouchableOpacity>
+            <View
+              style={[
+                styles.button,
+                {
+                  marginRight: 20,
+                  borderWidth: selectedType === type ? 1.5 : 0,
+                  borderColor: '#FF6E50',
+                },
+              ]}>
+              <Icon name={icon} />
+              <Text
+                s
+                style={{
+                  marginTop: 10,
+                  color: '#212525',
+                  fontFamily: 'gilroy-regular',
+                  fontSize: 14,
+                }}>
+                {text}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        );
+      })}
     </View>
   );
 }

@@ -4,7 +4,7 @@ import {View, Text, TouchableOpacity} from 'react-native';
 import DaySelect from '../../Components/Calendar/DaySelect';
 import Icon from '../../Components/Icon';
 import PercentageCircle from '../../Components/ProgressCricle';
-import SummaryCard from '../Home/SummaryCard';
+import SummaryCard from './SummaryCard';
 
 export default function HabitDetails({task}) {
   const strength = Math.round((task.continue / task.streak) * 100);

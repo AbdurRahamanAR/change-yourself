@@ -39,6 +39,11 @@ export const resetHabitContinue = habit => {
   }
 };
 
+export const isDateInFrequency = (frequency, date) => {
+  const todayInWeek = date.day();
+  return frequency.includes(todayInWeek);
+};
+
 const HabitProvider = ({children}) => {
   const resetContinueDone = useRef(false);
   const lastmonth = Array(31);
@@ -63,7 +68,6 @@ const HabitProvider = ({children}) => {
 
   useEffect(() => {
     if (!resetContinueDone.current) {
-      console.log('run');
       resetContinueDone.current = true;
       const newHabitList = habitList.map(habit => {
         return resetHabitContinue(habit);
@@ -101,8 +105,21 @@ const HabitProvider = ({children}) => {
     setHabitList(newTaskList);
   };
 
+  const totalComplete = (forDate = TODAY_MOMENT) => {
+    const year = forDate.year();
+    const month = forDate.month() + 1;
+    const date = forDate.date();
+    let completed = 0;
+    habitList.map(item => {
+      if (item.completStatus[year]?.[month]?.[date - 1]) {
+        completed += 1;
+      }
+    });
+    return completed;
+  };
+
   return (
-    <HabitContext.Provider value={{habitList, checkHabit}}>
+    <HabitContext.Provider value={{habitList, checkHabit, totalComplete}}>
       {children}
     </HabitContext.Provider>
   );

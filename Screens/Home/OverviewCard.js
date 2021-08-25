@@ -1,66 +1,73 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, StyleSheet} from 'react-native';
+import {useHabitList} from '../../Components/HabitProvider';
 
 import PercentageCircle from '../../Components/ProgressCricle';
-
-//TODO: Calculate complet data dynamically
+import {calculateParsentige} from '../../utils';
 
 export default function OverviewCard() {
+  const {totalComplete, habitList} = useHabitList();
+  const completed = totalComplete();
+  const totalCompletePersentige = calculateParsentige(
+    completed,
+    habitList.length,
+  );
   return (
-    <View
-      style={{
-        width: '100%',
-        height: 95,
-        backgroundColor: '#FF6E50',
-        borderRadius: 12,
-        paddingTop: 14,
-        paddingLeft: 21,
-        paddingBottom: 12,
-        paddingRight: 21,
-        flexDirection: 'row',
-        alignItems: 'center',
-      }}>
+    <View style={styles.root}>
       <View>
         <PercentageCircle
-          percent={70}
+          percent={totalCompletePersentige}
           radius={34.46}
           borderWidth={4}
           color="#fff"
           shadowColor="#FF6E50"
           bgColor="#FF6E50">
-          <Text
-            style={{
-              fontSize: 15.21,
-              lineHeight: 17,
-              color: '#fff',
-              fontFamily: 'Gilroy-Medium',
-            }}>
-            70%
-          </Text>
+          <Text style={styles.persentigeText}>{totalCompletePersentige}%</Text>
         </PercentageCircle>
       </View>
-      <View style={{marginLeft: 30}}>
-        <Text
-          style={{
-            fontSize: 16,
-            color: '#fff',
-            lineHeight: 17,
-            fontFamily: 'Gilroy-Sami-Bold',
-          }}>
+      <View style={styles.textInfoSection}>
+        <Text style={styles.headLine}>
           Your daily goals are {'\n'}almost done
         </Text>
-        <Text
-          style={{
-            marginTop: 6,
-            fontSize: 11,
-            lineHeight: 17,
-            color: '#fff',
-            fontFamily: 'Gilroy-Regular',
-          }}>
-          4 of 10 completed
+        <Text style={styles.completeInfoText}>
+          {completed} of {habitList.length} completed
         </Text>
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  root: {
+    width: '100%',
+    height: 95,
+    backgroundColor: '#FF6E50',
+    borderRadius: 12,
+    paddingTop: 14,
+    paddingLeft: 21,
+    paddingBottom: 12,
+    paddingRight: 21,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  textInfoSection: {marginLeft: 30},
+  persentigeText: {
+    fontSize: 15.21,
+    lineHeight: 17,
+    color: '#fff',
+    fontFamily: 'Gilroy-Medium',
+  },
+  headLine: {
+    fontSize: 16,
+    color: '#fff',
+    lineHeight: 17,
+    fontFamily: 'Gilroy-Sami-Bold',
+  },
+  completeInfoText: {
+    marginTop: 6,
+    fontSize: 11,
+    lineHeight: 17,
+    color: '#fff',
+    fontFamily: 'Gilroy-Regular',
+  },
+});
