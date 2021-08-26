@@ -1,13 +1,21 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
+import {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import DaySelect from '../../Components/Calendar/DaySelect';
 import Icon from '../../Components/Icon';
 import PercentageCircle from '../../Components/ProgressCricle';
+import AddHabitScreen from '../AddHabit';
 import SummaryCard from './SummaryCard';
 
 export default function HabitDetails({task}) {
   const strength = Math.round((task.continue / task.streak) * 100);
+  const [edit, setEdit] = useState(false);
+
+  if (edit) {
+    return <AddHabitScreen />;
+  }
+
   return (
     <View style={{paddingTop: 7, paddingHorizontal: 16, paddingBottom: 32}}>
       <View
@@ -26,7 +34,7 @@ export default function HabitDetails({task}) {
           }}>
           {task.title}
         </Text>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => setEdit(true)}>
           <Text
             style={{
               fontFamily: 'Gilroy-Bold',

@@ -1,3 +1,4 @@
+import {NavigationContainer} from '@react-navigation/native';
 import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 
@@ -5,10 +6,10 @@ import TopTabs from './TopTabs';
 
 const HabitManager = () => {
   return (
-    <View>
+    <NavigationContainer independent={true}>
       <Text style={styles.title}>Habits</Text>
       <TopTabs />
-    </View>
+    </NavigationContainer>
   );
 };
 

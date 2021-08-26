@@ -1,7 +1,7 @@
 import React, {useMemo, useRef, useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import {isDateInFrequency, useHabitList} from '../../Components/HabitProvider';
+import {useHabitList} from '../../Components/HabitProvider';
 import Icon from '../../Components/Icon';
 import HabitDetails from '../HabitDetails';
 
@@ -17,17 +17,17 @@ export default function HabitList({calenderDate}) {
   }, [calenderDate]);
   const refRBSheet = useRef();
   const [selectedTask, setSelectedTask] = useState();
-  const {habitList, checkHabit} = useHabitList();
+  const {getHabitListForADate, checkHabit} = useHabitList();
+
+  const habitList = getHabitListForADate(calenderDate);
 
   return (
     <View style={styles.root}>
       {habitList.map((task, index) => {
         const complete = task.completStatus[YEAR]?.[MONTH]?.[DATE - 1];
-        const todayHave = isDateInFrequency(task.frequency, calenderDate);
         const marginTop = index === 0 ? 0 : 15;
-        return !todayHave ? (
-          <></>
-        ) : (
+
+        return (
           <TouchableOpacity
             onPress={() => {
               setSelectedTask(task);

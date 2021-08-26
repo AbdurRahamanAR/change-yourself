@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, {
   useContext,
   useEffect,
@@ -6,7 +7,6 @@ import React, {
   useCallback,
 } from 'react';
 import uuid from 'react-native-uuid';
-import {TODAY_MOMENT} from '../App';
 import {CURRENT_MONTH, CURRENT_YEAR} from '../App';
 
 const HabitContext = React.createContext();
@@ -19,7 +19,7 @@ export const useHabitList = () => {
 
 export const getLastFrequencyDate = (
   frequency,
-  from = TODAY_MOMENT.startOf('day'),
+  from = moment().startOf('day'),
 ) => {
   const todayInWeek = from.day();
   const lessFrequencyDates = frequency.filter(item => item < todayInWeek);
@@ -122,7 +122,7 @@ const HabitProvider = ({children}) => {
   );
 
   const totalComplete = useCallback(
-    (forDate = TODAY_MOMENT) => {
+    (forDate = moment()) => {
       const year = forDate.year();
       const month = forDate.month() + 1;
       const date = forDate.date();
@@ -132,13 +132,23 @@ const HabitProvider = ({children}) => {
           completed += 1;
         }
       });
-      console.log('call', completed, date, TODAY_MOMENT.date());
+      console.log('call', completed, date, forDate.date());
       return completed;
     },
     [habitList],
   );
 
-  const addHabit = ({title, streak = 21, frequency}) => {
+  const getHabitListForADate = useCallback(
+    (forDate = moment()) => {
+      return habitList.filter(item => {
+        return isDateInFrequency(item.frequency, forDate);
+      });
+    },
+    [habitList],
+  );
+
+  const addHabit = ({title, streak = 21, type, frequency}) => {
+    console.log(frequency, 'cool');
     setHabitList(state => {
       return [
         ...state,
@@ -146,6 +156,7 @@ const HabitProvider = ({children}) => {
           id: uuid.v4(),
           title,
           streak,
+          type,
           frequency,
           bestStreak: 0,
           continue: 0,
@@ -161,7 +172,13 @@ const HabitProvider = ({children}) => {
 
   return (
     <HabitContext.Provider
-      value={{habitList, checkHabit, totalComplete, addHabit}}>
+      value={{
+        habitList,
+        checkHabit,
+        totalComplete,
+        addHabit,
+        getHabitListForADate,
+      }}>
       {children}
     </HabitContext.Provider>
   );
