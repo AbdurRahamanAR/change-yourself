@@ -1,11 +1,14 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
+
+import {NavigationContainer} from '@react-navigation/native';
+import TopTabs from '../../navigation/TopTabs';
 
 const index = () => {
   return (
-    <View style={styles.container}>
-      <Text>This is Habit Page</Text>
-    </View>
+    <NavigationContainer independent="true">
+      <TopTabs />
+    </NavigationContainer>
   );
 };
 

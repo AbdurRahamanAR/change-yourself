@@ -20,7 +20,7 @@ const TabDataList = [
   },
 ];
 
-const Tabs = () => {
+const bottomTabs = () => {
   return (
     <Tab.Navigator
       screenOptions={{
@@ -77,4 +77,4 @@ const styles = StyleSheet.create({
   tabLabel: {marginTop: 5},
 });
 
-export default Tabs;
+export default bottomTabs;
