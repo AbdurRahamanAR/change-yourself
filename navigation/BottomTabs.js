@@ -1,7 +1,7 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import Home from '../Screens/Home/index';
-import Habit from '../Screens/HabitManager/index';
+import HabitManager from '../Screens/HabitManager/index';
 import {StyleSheet, Text, View} from 'react-native';
 import Icon from '../Components/Icon';
 
@@ -16,7 +16,7 @@ const TabDataList = [
   {
     name: 'Habit',
     iconName: 'habit',
-    component: Habit,
+    component: HabitManager,
   },
 ];
 

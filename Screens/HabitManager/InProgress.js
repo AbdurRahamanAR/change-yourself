@@ -1,12 +1,10 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 
-const inProgress = () => {
+export default function InProgress() {
   return (
     <View>
-      <Text>This is progress</Text>
+      <Text>IN porgress</Text>
     </View>
   );
-};
-
-export default inProgress;
+}
