@@ -25,9 +25,12 @@ const Tabs = () => {
     <Tab.Navigator
       screenOptions={{
         tabBarShowLabel: false,
+
         tabBarStyle: {
           height: 70,
-          backgroundColor: '#FFFFFF',
+          backgroundColor: '#fff',
+          borderTopWidth: 0,
+          elevation: 0,
         },
       }}>
       {TabDataList.map(item => {
@@ -41,12 +44,16 @@ const Tabs = () => {
                 backgroundColor: '#FFFFFF',
               },
               headerShown: false,
+              tabBarItemStyle: {
+                paddingBottom: 11,
+                paddingTop: 12,
+              },
               tabBarIcon: ({focused}) => {
-                const color = focused ? '#FF6E50' : '#040405';
+                const color = focused ? '#FF6E50' : 'rgba(4, 4, 5, 0.4)';
                 return (
                   <View style={styles.tabItemRoot}>
-                    <Icon size={16} name={item.iconName} color={color} />
-                    <Text style={{color}}>{item.name}</Text>
+                    <Icon size={24} name={item.iconName} color={color} />
+                    <Text style={[styles.tabLabel, {color}]}>{item.name}</Text>
                   </View>
                 );
               },
@@ -67,6 +74,7 @@ const styles = StyleSheet.create({
     width: 25,
     height: 25,
   },
+  tabLabel: {marginTop: 5},
 });
 
 export default Tabs;
