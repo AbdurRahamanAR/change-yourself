@@ -1,6 +1,6 @@
 import React from 'react';
 import {NavigationContainer} from '@react-navigation/native';
-import Tabs from './Tabs';
+import BottomTabs from './BottomTabs';
 
 const NavigationTheme = {
   colors: {
@@ -11,7 +11,7 @@ const NavigationTheme = {
 export default function Navigation() {
   return (
     <NavigationContainer theme={NavigationTheme}>
-      <Tabs />
+      <BottomTabs />
     </NavigationContainer>
   );
 }
