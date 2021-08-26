@@ -1,4 +1,6 @@
-import React from 'react';
+import React, {useMemo} from 'react';
+import {useEffect} from 'react';
+import {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {useHabitList} from '../../Components/HabitProvider';
 
@@ -7,11 +9,20 @@ import {calculateParsentige} from '../../utils';
 
 export default function OverviewCard() {
   const {totalComplete, habitList} = useHabitList();
-  const completed = totalComplete();
+  const [completed, setCompleted] = useState(0);
+
+  useEffect(() => {
+    setCompleted(totalComplete());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [habitList]);
+
   const totalCompletePersentige = calculateParsentige(
     completed,
     habitList.length,
   );
+
+  console.log('change', completed, habitList.length);
+
   return (
     <View style={styles.root}>
       <View>

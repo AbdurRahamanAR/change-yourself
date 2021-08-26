@@ -8,7 +8,7 @@ import {
   Dimensions,
   StyleSheet,
 } from 'react-native';
-import {CURRENT_MONTH} from '.';
+import {CURRENT_MONTH} from '../../App';
 
 const MONTHS = moment.months();
 

@@ -1,18 +1,19 @@
 /* eslint-disable react-native/no-inline-styles */
-import moment from 'moment';
 import React, {useState, useRef} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 
-import Calendar from '../../Components/Calendar/index';
+import Calendar, {TODAY_MOMENT} from '../../App';
 import HabitProvider from '../../Components/HabitProvider';
 import AddHabitScreen from '../AddHabit';
 import HabitList from './HabitList';
 import OverviewCard from './OverviewCard';
 
 export default function Home() {
-  const [selectDate, setSelectDate] = useState(moment());
+  const [selectDate, setSelectDate] = useState(TODAY_MOMENT);
   const refRBSheet = useRef();
+
+  console.log('selct date', selectDate);
 
   return (
     <HabitProvider>

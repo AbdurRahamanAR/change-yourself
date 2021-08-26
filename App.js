@@ -1,23 +1,14 @@
 import React from 'react';
 import Navigation from './navigation/index';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  useColorScheme,
-  View,
-} from 'react-native';
+import {View} from 'react-native';
+import moment from 'moment';
 
-import {Colors} from 'react-native/Libraries/NewAppScreen';
-import Home from './Screens/Home';
+export const TODAY_MOMENT = moment();
+export const CURRENT_MONTH = TODAY_MOMENT.month() + 1;
+export const CURRENT_YEAR = TODAY_MOMENT.year();
+export const TODAY_DATE = TODAY_MOMENT.date();
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
-
   return (
     <View style={{flex: 1, height: '100%'}}>
       <Navigation />

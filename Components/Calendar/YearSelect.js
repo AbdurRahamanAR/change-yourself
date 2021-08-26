@@ -9,7 +9,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import Icon from '../Icon';
-import {CURRENT_YEAR} from '.';
+import {CURRENT_YEAR} from '../../App';
 
 const supportYears = [2021, 2022, 2023, 2024, 2025];
 

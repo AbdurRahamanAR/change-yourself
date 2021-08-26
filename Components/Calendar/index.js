@@ -7,11 +7,6 @@ import DaySelect from './DaySelect';
 import MonthSelect from './MonthSelect';
 import YearSelect from './YearSelect';
 
-export const TODAY_MOMENT = moment();
-export const CURRENT_MONTH = TODAY_MOMENT.month() + 1;
-export const CURRENT_YEAR = TODAY_MOMENT.year();
-export const TODAY_DATE = TODAY_MOMENT.date();
-
 export default function Calendar({onChange, value}) {
   const [selectMonth, setSelectMonth] = useState(value.month() + 1);
   const [selectYear, setSelectYear] = useState(value.year());
@@ -54,7 +49,6 @@ const styles = StyleSheet.create({
 
 MonthSelect.defaultProps = {
   onChange: () => {},
-  value: TODAY_MOMENT,
 };
 
 MonthSelect.propTypes = {
