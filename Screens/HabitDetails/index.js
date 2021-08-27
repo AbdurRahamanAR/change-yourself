@@ -8,12 +8,12 @@ import PercentageCircle from '../../Components/ProgressCricle';
 import AddHabitScreen from '../AddHabit';
 import SummaryCard from './SummaryCard';
 
-export default function HabitDetails({task}) {
+export default function HabitDetails({task, close}) {
   const strength = Math.round((task.continue / task.streak) * 100);
   const [edit, setEdit] = useState(false);
 
   if (edit) {
-    return <AddHabitScreen />;
+    return <AddHabitScreen close={close} mode="update" initialValues={task} />;
   }
 
   return (

@@ -50,27 +50,33 @@ export const ErrroMessageViewer = ({error}) => {
 };
 
 export default function AddHabitScreen({
-  close,
+  close = () => {},
   initialValues = defaultInitialValues,
   mode,
 }) {
-  const {addHabit} = useHabitList();
+  const isUpdateMode = mode === 'update';
+  const {addHabit, updateHabit} = useHabitList();
   const [step, setStep] = useState(1);
 
   const createHabit = values => {
-    addHabit(values);
+    addHabit({...values, streak: parseInt(values.streak, 10)});
     close();
   };
 
-  const updateHabit = values => {
-    console.log(values);
+  const handleUpdateHabit = values => {
+    updateHabit({
+      ...values,
+      id: initialValues.id,
+      streak: parseInt(values.streak, 10),
+    });
+    close();
   };
 
   return (
     <Formik
       validationSchema={addHabitFormSchema}
-      initialValues={initialValues}
-      onSubmit={mode === 'update' ? updateHabit : createHabit}>
+      initialValues={{...initialValues, streak: initialValues.streak + ''}}
+      onSubmit={mode === 'update' ? handleUpdateHabit : createHabit}>
       {({
         handleChange,
         handleBlur,
@@ -208,7 +214,7 @@ export default function AddHabitScreen({
               marginBottom: 32,
             }}>
             <Text style={{color: '#fff', fontSize: 16, fontWeight: '600'}}>
-              {step === 1 ? 'Next' : 'Done'}
+              {step === 1 ? 'Next' : isUpdateMode ? 'Update' : 'Done'}
             </Text>
           </TouchableOpacity>
         </View>

@@ -82,7 +82,10 @@ export default function HabitList({calenderDate}) {
             borderTopRightRadius: 20,
           },
         }}>
-        <HabitDetails task={selectedTask} />
+        <HabitDetails
+          close={() => refRBSheet.current.close()}
+          task={selectedTask}
+        />
       </RBSheet>
     </View>
   );

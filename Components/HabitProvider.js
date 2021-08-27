@@ -62,7 +62,8 @@ const HabitProvider = ({children}) => {
       id: uuid.v4(),
       title: 'Yoga',
       streak: 21,
-      frequency: [0, 1, 2, 3, 4, 5, 6],
+      type: 'do',
+      frequency: [0, 1, 2, 3, 6],
       bestStreak: 0,
       continue: 20,
       completStatus: {
@@ -170,6 +171,24 @@ const HabitProvider = ({children}) => {
     });
   };
 
+  const updateHabit = ({title, streak = 21, type, id, frequency}) => {
+    console.log(frequency, 'cool');
+    setHabitList(state => {
+      return state.map(item => {
+        if (item.id === id) {
+          return {
+            ...item,
+            title,
+            streak,
+            type,
+            frequency,
+          };
+        }
+        return item;
+      });
+    });
+  };
+
   return (
     <HabitContext.Provider
       value={{
@@ -178,6 +197,7 @@ const HabitProvider = ({children}) => {
         totalComplete,
         addHabit,
         getHabitListForADate,
+        updateHabit,
       }}>
       {children}
     </HabitContext.Provider>

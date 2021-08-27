@@ -1,5 +1,3 @@
-
-2. Add Edit habit feature
 3. Block calendar for future date
 4. Add realt data at view habit actiivity
 5. Finish add realData at Habit manager page
