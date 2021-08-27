@@ -1,5 +1,5 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useState} from 'react';
 import {
   View,
   Text,
@@ -7,36 +7,79 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-
+import * as Yup from 'yup';
 import {Formik} from 'formik';
+
 import HabitDatePickerFormItem from './HabitDatePickerFormItem';
 import HabitTypePickerFormIitem from './HabitTypePickerFormIitem';
 import {useHabitList} from '../../Components/HabitProvider';
-import {useState} from 'react';
 
 export const habit_types = {
   DO: 'do',
   DONT: 'dont',
 };
 
-export default function AddHabitScreen({close}) {
+const defaultInitialValues = {
+  title: '',
+  type: habit_types.DO,
+  frequency: [],
+  streak: 21,
+};
+
+const stepOneSchema = Yup.object().shape({
+  title: Yup.string()
+    .min(2, 'Too Short!')
+    .max(50, 'Too Long!')
+    .required('Habit name is required!'),
+  type: Yup.string().required('Required'),
+});
+
+const stepTwoSchema = Yup.object().shape({});
+
+const addHabitFormSchema = Yup.object().shape({
+  title: Yup.string()
+    .max(50, 'Name is too long!')
+    .required('Habit name is required!'),
+  type: Yup.string().required('Required'),
+  frequency: Yup.array().min(1, 'At least select 1 day!').required('Required'),
+  streak: Yup.number().typeError('Must be a number!').required('Requied'),
+});
+
+export const ErrroMessageViewer = ({error}) => {
+  return error ? <Text style={{color: 'tomato'}}>{error}</Text> : null;
+};
+
+export default function AddHabitScreen({
+  close,
+  initialValues = defaultInitialValues,
+  mode,
+}) {
   const {addHabit} = useHabitList();
   const [step, setStep] = useState(1);
-  const initialValues = {
-    title: '',
-    type: habit_types.DO,
-    frequency: [],
-    streak: 21,
-  };
 
   const createHabit = values => {
     addHabit(values);
     close();
   };
 
+  const updateHabit = values => {
+    console.log(values);
+  };
+
   return (
-    <Formik initialValues={initialValues} onSubmit={createHabit}>
-      {({handleChange, handleBlur, handleSubmit, values, setFieldValue}) => (
+    <Formik
+      validationSchema={addHabitFormSchema}
+      initialValues={initialValues}
+      onSubmit={mode === 'update' ? updateHabit : createHabit}>
+      {({
+        handleChange,
+        handleBlur,
+        handleSubmit,
+        values,
+        setFieldValue,
+        validateForm,
+        errors,
+      }) => (
         <View
           style={{
             backgroundColor: '#fff',
@@ -64,6 +107,7 @@ export default function AddHabitScreen({close}) {
                         fontWeight: 'normal',
                       }}
                     />
+                    <ErrroMessageViewer error={errors.title} />
                   </View>
                   <Text style={[styles.titleText, {marginTop: 19}]}>
                     Types of habit
@@ -73,6 +117,7 @@ export default function AddHabitScreen({close}) {
                     onChange={handleChange('type')}
                     style={{marginTop: 15}}
                   />
+                  <ErrroMessageViewer error={errors.type} />
                 </>
               )}
               {step === 2 && (
@@ -86,10 +131,21 @@ export default function AddHabitScreen({close}) {
                       setFieldValue('frequency', v);
                     }}
                     style={{marginTop: 15}}
+                    error={errors.frequency}
                   />
-                  <Text style={[styles.titleText, {marginTop: 29}]}>
-                    What your target days?
-                  </Text>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                      marginTop: 29,
+                    }}>
+                    <Text style={[styles.titleText]}>
+                      What your target days?
+                    </Text>
+                    <View style={{marginLeft: 'auto'}}>
+                      <ErrroMessageViewer error={errors.streak} />
+                    </View>
+                  </View>
                   <View style={{marginTop: 15}}>
                     <TextInput
                       placeholder="Streak"
@@ -126,9 +182,21 @@ export default function AddHabitScreen({close}) {
           <TouchableOpacity
             onPress={() => {
               if (step === 1) {
-                setStep(2);
+                stepOneSchema.isValid(values).then(function (valid) {
+                  if (valid) {
+                    setStep(2);
+                  } else {
+                    validateForm();
+                  }
+                });
               } else {
-                handleSubmit();
+                stepTwoSchema.isValid(values).then(function (valid) {
+                  if (valid) {
+                    handleSubmit();
+                  } else {
+                    validateForm();
+                  }
+                });
               }
             }}
             style={{

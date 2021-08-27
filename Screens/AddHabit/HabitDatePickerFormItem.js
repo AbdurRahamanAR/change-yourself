@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
+import {ErrroMessageViewer} from '.';
 import Icon from '../../Components/Icon';
 
 const DayList = [
@@ -17,6 +18,7 @@ export default function HabitDatePickerFormItem({
   style = {},
   value = [],
   onChange,
+  error,
 }) {
   const [selectedDay, setSelectedDay] = useState(value);
 
@@ -61,30 +63,40 @@ export default function HabitDatePickerFormItem({
           );
         })}
       </View>
-      <TouchableOpacity
+      <View
         style={{
           display: 'flex',
           flexDirection: 'row',
+          alignItems: 'center',
           marginTop: 20,
-        }}
-        onPress={() => {
-          if (selectedDay.length === 7) {
-            const newValue = [];
-            onChange(newValue);
-            setSelectedDay(newValue);
-          } else {
-            const newValue = [0, 1, 2, 3, 4, 5, 6];
-            onChange(newValue);
-            setSelectedDay(newValue);
-          }
         }}>
-        <Icon
-          name="correct-square"
-          size={20}
-          color={selectedDay.length === 7 ? '#FF6E50' : '#F5F3FC'}
-        />
-        <Text style={{marginLeft: 12}}>Repeat Everyday</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            display: 'flex',
+            flexDirection: 'row',
+          }}
+          onPress={() => {
+            if (selectedDay.length === 7) {
+              const newValue = [];
+              onChange(newValue);
+              setSelectedDay(newValue);
+            } else {
+              const newValue = [0, 1, 2, 3, 4, 5, 6];
+              onChange(newValue);
+              setSelectedDay(newValue);
+            }
+          }}>
+          <Icon
+            name="correct-square"
+            size={20}
+            color={selectedDay.length === 7 ? '#FF6E50' : '#F5F3FC'}
+          />
+          <Text style={{marginLeft: 12}}>Repeat Everyday</Text>
+        </TouchableOpacity>
+        <View style={{marginLeft: 'auto'}}>
+          <ErrroMessageViewer error={error} />
+        </View>
+      </View>
     </>
   );
 }
