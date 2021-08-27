@@ -10,6 +10,7 @@ import {
 
 import {Colors} from 'react-native/Libraries/NewAppScreen';
 import Home from './Screens/Home';
+import HabitsList from './Screens/HabitManager/HabitsList';
 
 const App = () => {
   const isDarkMode = useColorScheme() === 'dark';
@@ -21,6 +22,7 @@ const App = () => {
   return (
     <View style={{flex: 1, height: '100%'}}>
       <Navigation />
+      {/* <HabitsList /> */}
     </View>
   );
 };
