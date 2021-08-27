@@ -10,6 +10,9 @@ const TopTabs = () => {
   return (
     <Tab.Navigator
       screenOptions={{
+        cardStyle: {
+          backgroundColor: '#ffffff',
+        },
         tabBarActiveTintColor: '#FF7115',
         tabBarInactiveTintColor: '#212525',
         tabBarIndicatorStyle: {
