@@ -8,7 +8,7 @@ import {
   Dimensions,
   StyleSheet,
 } from 'react-native';
-import {CURRENT_YEAR, CURRENT_MONTH, TODAY_DATE} from '.';
+import {CURRENT_YEAR, CURRENT_MONTH, TODAY_DATE} from '../../App';
 
 export function getDaysArrayByMonth(monthNo, year) {
   var daysInMonth = moment(`${year} ${monthNo}`, 'YYYY MM').daysInMonth();

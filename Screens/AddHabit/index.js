@@ -11,42 +11,32 @@ import {
 import {Formik} from 'formik';
 import HabitDatePickerFormItem from './HabitDatePickerFormItem';
 import HabitTypePickerFormIitem from './HabitTypePickerFormIitem';
+import {useHabitList} from '../../Components/HabitProvider';
+import {useState} from 'react';
 
 export const habit_types = {
   DO: 'do',
   DONT: 'dont',
 };
 
-// {
-//   id: 1,
-//   title: 'Yoga',
-//   streak: 21,
-//   type: "do"
-//   frequency: [0, 1, 2, 3, 4, 5, 6],
-//   bestStreak: 0,
-//   continue: 20,
-//   completStatus: {
-//     2021: {
-//       7: lastmonth,
-//       8: [true, false],
-//     },
-//   },
-// },
-
-export default function AddHabitScreen() {
+export default function AddHabitScreen({close}) {
+  const {addHabit} = useHabitList();
+  const [step, setStep] = useState(1);
   const initialValues = {
-    name: '',
+    title: '',
     type: habit_types.DO,
     frequency: [],
+    streak: 21,
   };
 
   const createHabit = values => {
-    console.log(values);
+    addHabit(values);
+    close();
   };
 
   return (
     <Formik initialValues={initialValues} onSubmit={createHabit}>
-      {({handleChange, handleBlur, handleSubmit, values}) => (
+      {({handleChange, handleBlur, handleSubmit, values, setFieldValue}) => (
         <View
           style={{
             backgroundColor: '#fff',
@@ -57,42 +47,90 @@ export default function AddHabitScreen() {
           }}>
           <View style={{marginBottom: 'auto'}}>
             <View>
-              <Text style={styles.titleText}>Habit you want to form?</Text>
-              <View style={{marginTop: 15}}>
-                <TextInput
-                  placeholder="Habit Name"
-                  onChangeText={handleChange('name')}
-                  onBlur={handleBlur('name')}
-                  value={values.name}
-                  autoFocus
-                  style={{
-                    fontSize: 16,
-                    lineHeight: 19,
-                    color: 'rgba(4, 4, 5, 0.4)',
-                    fontWeight: 'normal',
-                  }}
-                />
-              </View>
-              <Text style={[styles.titleText, {marginTop: 19}]}>
-                Types of habit
-              </Text>
-              <HabitTypePickerFormIitem
-                value={values.type}
-                onChange={handleChange('type')}
-                style={{marginTop: 15}}
-              />
-              <Text style={[styles.titleText, {marginTop: 29}]}>
-                How often you want to do it?
-              </Text>
-              <HabitDatePickerFormItem
-                value={values.frequency}
-                style={{marginTop: 15}}
-              />
+              {step === 1 && (
+                <>
+                  <Text style={styles.titleText}>Habit you want to form?</Text>
+                  <View style={{marginTop: 15}}>
+                    <TextInput
+                      placeholder="Habit Name"
+                      onChangeText={handleChange('title')}
+                      onBlur={handleBlur('title')}
+                      value={values.title}
+                      autoFocus
+                      style={{
+                        fontSize: 16,
+                        lineHeight: 19,
+                        color: 'rgba(4, 4, 5, 0.4)',
+                        fontWeight: 'normal',
+                      }}
+                    />
+                  </View>
+                  <Text style={[styles.titleText, {marginTop: 19}]}>
+                    Types of habit
+                  </Text>
+                  <HabitTypePickerFormIitem
+                    value={values.type}
+                    onChange={handleChange('type')}
+                    style={{marginTop: 15}}
+                  />
+                </>
+              )}
+              {step === 2 && (
+                <>
+                  <Text style={[styles.titleText, {marginTop: -20}]}>
+                    How often you want to do it?
+                  </Text>
+                  <HabitDatePickerFormItem
+                    value={values.frequency}
+                    onChange={v => {
+                      setFieldValue('frequency', v);
+                    }}
+                    style={{marginTop: 15}}
+                  />
+                  <Text style={[styles.titleText, {marginTop: 29}]}>
+                    What your target days?
+                  </Text>
+                  <View style={{marginTop: 15}}>
+                    <TextInput
+                      placeholder="Streak"
+                      onChangeText={handleChange('streak')}
+                      onBlur={handleBlur('streak')}
+                      value={values.streak}
+                      keyboardType="decimal-pad"
+                      style={{
+                        fontSize: 16,
+                        lineHeight: 19,
+                        color: 'rgba(4, 4, 5, 0.4)',
+                        fontWeight: 'normal',
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        borderColor: 'rgba(4, 4, 5, 0.2)',
+                        padding: 8,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        marginTop: 10,
+                        fontSize: 14,
+                        color: 'rgba(4, 4, 5, 0.6)',
+                      }}>
+                      Expert recorment to use 21min day as strike that help you
+                      to bet your habit
+                    </Text>
+                  </View>
+                </>
+              )}
             </View>
           </View>
 
           <TouchableOpacity
-            onPress={handleSubmit}
+            onPress={() => {
+              if (step === 1) {
+                setStep(2);
+              } else {
+                handleSubmit();
+              }
+            }}
             style={{
               backgroundColor: '#FF6E50',
               height: 56,
@@ -102,7 +140,7 @@ export default function AddHabitScreen() {
               marginBottom: 32,
             }}>
             <Text style={{color: '#fff', fontSize: 16, fontWeight: '600'}}>
-              Done
+              {step === 1 ? 'Next' : 'Done'}
             </Text>
           </TouchableOpacity>
         </View>

@@ -1,17 +1,30 @@
-import React from 'react';
+import moment from 'moment';
+import React, {useMemo} from 'react';
+import {useEffect} from 'react';
+import {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {useHabitList} from '../../Components/HabitProvider';
 
 import PercentageCircle from '../../Components/ProgressCricle';
 import {calculateParsentige} from '../../utils';
 
-export default function OverviewCard() {
-  const {totalComplete, habitList} = useHabitList();
-  const completed = totalComplete();
+export default function OverviewCard({todayList}) {
+  const {totalComplete, getHabitListForADate} = useHabitList();
+  const [completed, setCompleted] = useState(0);
+  const habitList = useMemo(() => {
+    return getHabitListForADate(moment());
+  }, [getHabitListForADate]);
+
+  useEffect(() => {
+    setCompleted(totalComplete());
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [habitList]);
+
   const totalCompletePersentige = calculateParsentige(
     completed,
     habitList.length,
   );
+
   return (
     <View style={styles.root}>
       <View>

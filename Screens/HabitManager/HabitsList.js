@@ -1,37 +1,35 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import Icon from '../../Components/Icon';
 import habitData from './habitData.json';
-import {Provider, Menu} from 'react-native-paper';
+import {Menu} from 'react-native-paper';
 
 const HabitsList = () => {
   const [visible, setVisible] = useState(false);
-  const openMenu = () => setVisible(true);
+  const openMenu = name => setVisible(name);
   const closeMenu = () => setVisible(false);
 
-  console.log(habitData);
   return (
     <View style={styles.container}>
       {habitData.map(habit => (
         <View style={styles.habitsContainer}>
           <Text style={styles.habits}>{habit.habitName}</Text>
-          <Provider>
+          <View style={styles.dotMenu}>
             <Menu
-              visible={visible}
+              visible={visible === habit.habitName}
               onDismiss={closeMenu}
               anchor={
-                <Icon
-                  style={styles.dotMenu}
-                  onPress={openMenu}
-                  size={17}
-                  name="dotMenu"
-                />
+                <TouchableOpacity
+                  onPress={() => {
+                    openMenu(habit.habitName);
+                  }}>
+                  <Icon size={17} name="dotMenu" />
+                </TouchableOpacity>
               }>
-              <Menu.Item onPress={() => {}} title="Item 1" />
-              <Menu.Item onPress={() => {}} title="Item 2" />
-              <Menu.Item onPress={() => {}} title="Item 3" />
+              <Menu.Item onPress={() => {}} title="Delete" />
+              <Menu.Item onPress={() => {}} title="Edit" />
             </Menu>
-          </Provider>
+          </View>
         </View>
       ))}
     </View>
@@ -44,17 +42,19 @@ const styles = StyleSheet.create({
   },
   dotMenu: {
     marginLeft: 'auto',
+    paddingRight: 26,
   },
   habitsContainer: {
-    paddingVertical: 20,
-    paddingHorizontal: 16,
+    paddingTop: 32,
+    paddingBottom: 22,
+    paddingLeft: 10,
     borderBottomWidth: 1,
-    borderBottomColor: '#040405',
+    borderColor: 'rgba(4, 4, 5, 0.1)',
     flexDirection: 'row',
     alignItems: 'center',
   },
-  habit: {
-    fontSize: 25,
+  habits: {
+    fontSize: 18,
     fontWeight: 'bold',
   },
 });

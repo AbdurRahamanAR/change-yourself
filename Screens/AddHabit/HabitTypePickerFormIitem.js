@@ -21,6 +21,7 @@ export default function HabitTypePickerFormIitem({
         const text = type === habit_types.DO ? 'To-do' : 'Not to-do';
         return (
           <TouchableOpacity
+            key={type}
             onPress={() => {
               setSelectedType(type);
               onChange(type);

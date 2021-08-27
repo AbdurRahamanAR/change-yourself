@@ -8,6 +8,5 @@ export function padding(top, right, bottom, left) {
 }
 
 export const calculateParsentige = (pEarned, pPos) => {
-  console.log('cool', pEarned, pPos);
   return Math.round((pEarned / pPos) * 100);
 };

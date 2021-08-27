@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
+import Icon from '../../Components/Icon';
 
 const DayList = [
   'Sunday',
@@ -12,36 +13,78 @@ const DayList = [
   'Saturday',
 ];
 
-export default function HabitDatePickerFormItem({style = {}}) {
-  const [selectedDay, setSelectedDay] = useState([]);
+export default function HabitDatePickerFormItem({
+  style = {},
+  value = [],
+  onChange,
+}) {
+  const [selectedDay, setSelectedDay] = useState(value);
+
+  const handleSelectDay = (index, active) => {
+    if (active) {
+      setSelectedDay(state => {
+        const newData = state.filter(item => item !== index);
+        onChange(newData);
+        return newData;
+      });
+    } else {
+      setSelectedDay(state => {
+        const newData = [...state, index];
+        onChange(newData);
+        return newData;
+      });
+    }
+  };
 
   return (
-    <View style={{flexDirection: 'row', ...style}}>
-      {DayList.map(day => {
-        const active = selectedDay.includes(day);
-        return (
-          <TouchableOpacity
-            key={day}
-            style={{
-              width: 33,
-              height: 35,
-              marginRight: 15,
-              backgroundColor: active ? '#FF6E50' : '#F5F5F7',
-              borderRadius: 5,
-              justifyContent: 'center',
-              alignItems: 'center',
-            }}
-            onPress={() => {
-              if (active) {
-                setSelectedDay(state => state.filter(item => item !== day));
-              } else {
-                setSelectedDay(state => [...state, day]);
-              }
-            }}>
-            <Text style={{color: active ? '#fff' : '#212525'}}>{day[0]}</Text>
-          </TouchableOpacity>
-        );
-      })}
-    </View>
+    <>
+      <View style={{flexDirection: 'row', ...style}}>
+        {DayList.map((day, index) => {
+          const active = selectedDay.includes(index);
+          return (
+            <TouchableOpacity
+              key={day}
+              style={{
+                width: 33,
+                height: 35,
+                marginRight: 15,
+                backgroundColor: active ? '#FF6E50' : '#F5F5F7',
+                borderRadius: 5,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}
+              onPress={() => {
+                handleSelectDay(index, active);
+              }}>
+              <Text style={{color: active ? '#fff' : '#212525'}}>{day[0]}</Text>
+            </TouchableOpacity>
+          );
+        })}
+      </View>
+      <TouchableOpacity
+        style={{
+          display: 'flex',
+          flexDirection: 'row',
+          marginTop: 20,
+        }}
+        onPress={() => {
+          if (selectedDay.length === 7) {
+            const newValue = [];
+            onChange(newValue);
+            setSelectedDay(newValue);
+          } else {
+            const newValue = [0, 1, 2, 3, 4, 5, 6];
+            onChange(newValue);
+            setSelectedDay(newValue);
+          }
+        }}>
+        <Icon
+          name="correct-square"
+          size={20}
+          color={selectedDay.length === 7 ? '#FF6E50' : '#F5F3FC'}
+        />
+        <Text style={{marginLeft: 12}}>Repeat Everyday</Text>
+      </TouchableOpacity>
+    </>
   );
 }

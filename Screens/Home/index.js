@@ -4,7 +4,7 @@ import React, {useState, useRef} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 
-import Calendar from '../../Components/Calendar/index';
+import Calendar from '../../Components/Calendar';
 import HabitProvider from '../../Components/HabitProvider';
 import AddHabitScreen from '../AddHabit';
 import HabitList from './HabitList';
@@ -13,6 +13,10 @@ import OverviewCard from './OverviewCard';
 export default function Home() {
   const [selectDate, setSelectDate] = useState(moment());
   const refRBSheet = useRef();
+
+  const handleCrateHabitSheetClose = () => {
+    refRBSheet.current.close();
+  };
 
   return (
     <HabitProvider>
@@ -38,7 +42,7 @@ export default function Home() {
         <RBSheet
           ref={refRBSheet}
           closeOnDragDown={true}
-          height={570}
+          height={449}
           openDuration={500}
           customStyles={{
             wrapper: {
@@ -54,7 +58,7 @@ export default function Home() {
               borderTopRightRadius: 20,
             },
           }}>
-          <AddHabitScreen />
+          <AddHabitScreen close={handleCrateHabitSheetClose} />
         </RBSheet>
       </View>
     </HabitProvider>

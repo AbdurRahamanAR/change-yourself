@@ -1,9 +1,9 @@
 import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Home from '../Screens/Home/index';
-import HabitManager from '../Screens/HabitManager/index';
 import {StyleSheet, Text, View} from 'react-native';
 import Icon from '../Components/Icon';
+import HabitManager from '../Screens/HabitManager';
+import Home from '../Screens/Home';
 
 const Tab = createBottomTabNavigator();
 

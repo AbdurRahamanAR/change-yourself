@@ -1,5 +1,13 @@
-import React, {useContext, useEffect, useRef, useState} from 'react';
-import {TODAY_MOMENT} from './Calendar';
+import moment from 'moment';
+import React, {
+  useContext,
+  useEffect,
+  useRef,
+  useState,
+  useCallback,
+} from 'react';
+import uuid from 'react-native-uuid';
+import {CURRENT_MONTH, CURRENT_YEAR} from '../App';
 
 const HabitContext = React.createContext();
 
@@ -11,7 +19,7 @@ export const useHabitList = () => {
 
 export const getLastFrequencyDate = (
   frequency,
-  from = TODAY_MOMENT.startOf('day'),
+  from = moment().startOf('day'),
 ) => {
   const todayInWeek = from.day();
   const lessFrequencyDates = frequency.filter(item => item < todayInWeek);
@@ -51,7 +59,7 @@ const HabitProvider = ({children}) => {
 
   const [habitList, setHabitList] = useState([
     {
-      id: 1,
+      id: uuid.v4(),
       title: 'Yoga',
       streak: 21,
       frequency: [0, 1, 2, 3, 4, 5, 6],
@@ -76,50 +84,101 @@ const HabitProvider = ({children}) => {
     }
   }, [habitList, resetContinueDone]);
 
-  const checkHabit = (habitId, date) => {
-    const YEAR = date.year();
-    const MONTH = date.month() + 1;
-    const DATE = date.date();
+  const checkHabit = useCallback(
+    (habitId, date) => {
+      const YEAR = date.year();
+      const MONTH = date.month() + 1;
+      const DATE = date.date();
+      const newTaskList = habitList.map(item => {
+        if (item.id === habitId) {
+          let dateListData = [];
+          if (item?.completStatus?.[YEAR]?.[MONTH]) {
+            dateListData = item?.completStatus?.[YEAR]?.[MONTH];
+          }
+          const operationType = dateListData[DATE - 1]
+            ? 'unchecked'
+            : 'checked';
+          item.continue =
+            operationType === 'unchecked'
+              ? item.continue - 1
+              : item.continue + 1;
+          if (item.continue > item.bestStreak) {
+            item.bestStreak = item.continue;
+          }
+          dateListData[DATE - 1] = operationType === 'unchecked' ? false : true;
+          item.completStatus = {
+            ...item.completStatus,
+            [YEAR]: {
+              ...item.completStatus?.[YEAR],
+              [MONTH]: dateListData,
+            },
+          };
+        }
+        return item;
+      });
+      setHabitList(newTaskList);
+    },
+    [habitList],
+  );
 
-    const newTaskList = habitList.map(item => {
-      if (item.id === habitId) {
-        let dateListData = [];
-        if (item?.completStatus?.[YEAR]?.[MONTH]) {
-          dateListData = item?.completStatus?.[YEAR]?.[MONTH];
+  const totalComplete = useCallback(
+    (forDate = moment()) => {
+      const year = forDate.year();
+      const month = forDate.month() + 1;
+      const date = forDate.date();
+      let completed = 0;
+      habitList.map(item => {
+        if (item.completStatus[year]?.[month]?.[date - 1]) {
+          completed += 1;
         }
-        item.continue = item.continue + 1;
-        if (item.continue > item.bestStreak) {
-          item.bestStreak = item.continue;
-        }
-        dateListData[DATE - 1] = dateListData[DATE - 1] ? false : true;
-        item.completStatus = {
-          ...item.completStatus,
-          [YEAR]: {
-            ...item.completStatus?.[YEAR],
-            [MONTH]: dateListData,
+      });
+      console.log('call', completed, date, forDate.date());
+      return completed;
+    },
+    [habitList],
+  );
+
+  const getHabitListForADate = useCallback(
+    (forDate = moment()) => {
+      return habitList.filter(item => {
+        return isDateInFrequency(item.frequency, forDate);
+      });
+    },
+    [habitList],
+  );
+
+  const addHabit = ({title, streak = 21, type, frequency}) => {
+    console.log(frequency, 'cool');
+    setHabitList(state => {
+      return [
+        ...state,
+        {
+          id: uuid.v4(),
+          title,
+          streak,
+          type,
+          frequency,
+          bestStreak: 0,
+          continue: 0,
+          completStatus: {
+            [CURRENT_YEAR]: {
+              [CURRENT_MONTH]: [],
+            },
           },
-        };
-      }
-      return item;
+        },
+      ];
     });
-    setHabitList(newTaskList);
-  };
-
-  const totalComplete = (forDate = TODAY_MOMENT) => {
-    const year = forDate.year();
-    const month = forDate.month() + 1;
-    const date = forDate.date();
-    let completed = 0;
-    habitList.map(item => {
-      if (item.completStatus[year]?.[month]?.[date - 1]) {
-        completed += 1;
-      }
-    });
-    return completed;
   };
 
   return (
-    <HabitContext.Provider value={{habitList, checkHabit, totalComplete}}>
+    <HabitContext.Provider
+      value={{
+        habitList,
+        checkHabit,
+        totalComplete,
+        addHabit,
+        getHabitListForADate,
+      }}>
       {children}
     </HabitContext.Provider>
   );

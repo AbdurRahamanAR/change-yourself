@@ -1,12 +1,12 @@
-import React from 'react';
-import {StyleSheet, Text} from 'react-native';
-
 import {NavigationContainer} from '@react-navigation/native';
+import React from 'react';
+import {StyleSheet, Text, View} from 'react-native';
+
 import TopTabs from './TopTabs';
 
 const HabitManager = () => {
   return (
-    <NavigationContainer independent="true">
+    <NavigationContainer independent={true}>
       <Text style={styles.title}>Habits</Text>
       <TopTabs />
     </NavigationContainer>
