@@ -1,13 +1,9 @@
 import moment from 'moment';
-import React, {
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-  useCallback,
-} from 'react';
+import React, {useContext, useEffect, useRef, useCallback} from 'react';
 import uuid from 'react-native-uuid';
 import {CURRENT_MONTH, CURRENT_YEAR} from '../App';
+import {STORAGE_KEY} from '../constest';
+import useStorageState from '../hooks/useStorageState';
 
 const HabitContext = React.createContext();
 
@@ -57,33 +53,21 @@ const HabitProvider = ({children}) => {
   const lastmonth = Array(31);
   lastmonth[30] = true;
 
-  const [habitList, setHabitList] = useState([
-    {
-      id: uuid.v4(),
-      title: 'Yoga',
-      streak: 21,
-      type: 'do',
-      frequency: [0, 1, 2, 3, 6],
-      bestStreak: 0,
-      continue: 20,
-      completStatus: {
-        2021: {
-          7: lastmonth,
-          8: [true, false],
-        },
-      },
-    },
-  ]);
+  const [habitList, setHabitList] = useStorageState(
+    STORAGE_KEY.HABITS,
+    [],
+    data => (data ? data : []),
+  );
 
   useEffect(() => {
-    if (!resetContinueDone.current) {
+    if (!resetContinueDone.current && habitList.length > 0) {
       resetContinueDone.current = true;
       const newHabitList = habitList.map(habit => {
         return resetHabitContinue(habit);
       });
       setHabitList(newHabitList);
     }
-  }, [habitList, resetContinueDone]);
+  }, [habitList, resetContinueDone, setHabitList]);
 
   const checkHabit = useCallback(
     (habitId, date) => {
@@ -119,7 +103,7 @@ const HabitProvider = ({children}) => {
       });
       setHabitList(newTaskList);
     },
-    [habitList],
+    [habitList, setHabitList],
   );
 
   const totalComplete = useCallback(
@@ -133,7 +117,6 @@ const HabitProvider = ({children}) => {
           completed += 1;
         }
       });
-      console.log('call', completed, date, forDate.date());
       return completed;
     },
     [habitList],

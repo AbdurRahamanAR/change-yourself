@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState, useRef} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
@@ -27,6 +28,12 @@ const HabitsList = ({habits, handleDelete}) => {
                 onDismiss={closeMenu}
                 anchor={
                   <TouchableOpacity
+                    style={{
+                      width: 70,
+                      display: 'flex',
+                      justifyContent: 'center',
+                      flexDirection: 'row',
+                    }}
                     onPress={() => {
                       openMenu(habit.title);
                     }}>
@@ -84,7 +91,6 @@ const styles = StyleSheet.create({
   },
   dotMenu: {
     marginLeft: 'auto',
-    paddingRight: 26,
   },
   habitsContainer: {
     paddingTop: 32,

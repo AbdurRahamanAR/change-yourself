@@ -1,5 +1,4 @@
 3. Block calendar for future date
 4. Add realt data at view habit actiivity
-6. connect with localstorate 
 7. fixing text styling
 8. Add color config
