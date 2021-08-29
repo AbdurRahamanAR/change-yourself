@@ -1,11 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
+import moment from 'moment';
 import React from 'react';
 import {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
-import DaySelect from '../../Components/Calendar/DaySelect';
 import Icon from '../../Components/Icon';
 import PercentageCircle from '../../Components/ProgressCricle';
 import AddHabitScreen from '../AddHabit';
+import ActivityViewer from './ActivityViewer';
 import SummaryCard from './SummaryCard';
 
 export default function HabitDetails({task, close}) {
@@ -110,7 +111,9 @@ export default function HabitDetails({task, close}) {
         }}>
         Activity
       </Text>
-      <DaySelect />
+      <ActivityViewer
+        data={task.completStatus[moment().year()][moment().month() + 1]}
+      />
     </View>
   );
 }

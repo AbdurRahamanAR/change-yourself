@@ -29,6 +29,7 @@ export default function Home() {
           onChange={v => {
             setSelectDate(v);
           }}
+          blockAfter={moment()}
         />
         <HabitList calenderDate={selectDate} />
         <TouchableOpacity

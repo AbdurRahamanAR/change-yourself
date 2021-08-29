@@ -30,22 +30,16 @@ export default function HabitList({calenderDate}) {
         return (
           <TouchableOpacity
             onPress={() => {
-              setSelectedTask(task);
-              refRBSheet.current.open();
+              checkHabit(task.id, calenderDate);
             }}
             key={task.id}
             style={{marginTop}}>
             <View style={styles.habitContainer}>
-              <TouchableOpacity
-                onPress={v => {
-                  checkHabit(task.id, calenderDate);
-                }}>
-                <Icon
-                  name="correct-square"
-                  size={20}
-                  color={complete ? '#FF6E50' : '#F5F3FC'}
-                />
-              </TouchableOpacity>
+              <Icon
+                name="correct-square"
+                size={20}
+                color={complete ? '#FF6E50' : '#F5F3FC'}
+              />
 
               <Text style={styles.title}>{task.title}</Text>
               <Text style={styles.streakStatus}>

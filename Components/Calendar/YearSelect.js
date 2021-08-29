@@ -24,7 +24,7 @@ const getScrollX = nextIdx => {
 
 const getYearIndex = year => supportYears.findIndex(item => item === year);
 
-export default function YearSelect({onChange, value}) {
+export default function YearSelect({onChange, value, blockAfter}) {
   const [yearRef, setYearRef] = useState();
   const [activeIdx, setActiveIdx] = useState(getYearIndex(value));
   const safeOnChange = useRef(onChange);
@@ -96,7 +96,8 @@ export default function YearSelect({onChange, value}) {
         ))}
       </ScrollView>
 
-      {activeIdx !== supportYears.length - 1 ? (
+      {activeIdx !== supportYears.length - 1 &&
+      blockAfter > supportYears[activeIdx] ? (
         <TouchableOpacity onPress={handleNext}>
           <Icon name="arrow_right" size={16} color="rgba(4, 4, 5, 0.5)" />
         </TouchableOpacity>
@@ -130,4 +131,5 @@ YearSelect.defaultProps = {
 YearSelect.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.oneOf(supportYears),
+  blockAfter: PropTypes.number,
 };

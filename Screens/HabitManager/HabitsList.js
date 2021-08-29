@@ -1,14 +1,22 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useRef} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Touchable,
+} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import Icon from '../../Components/Icon';
 import {Menu} from 'react-native-paper';
 import AddHabitScreen from '../AddHabit';
+import HabitDetails from '../HabitDetails';
 
 const HabitsList = ({habits, handleDelete}) => {
   const [visible, setVisible] = useState(false);
   const refRBSheet = useRef();
+  const refHabitDetailsSheet = useRef();
 
   const handleCrateHabitSheetClose = () => {
     refRBSheet.current.close();
@@ -20,7 +28,10 @@ const HabitsList = ({habits, handleDelete}) => {
     <>
       <View style={styles.container}>
         {habits.map(habit => (
-          <View key={habit.id} style={styles.habitsContainer}>
+          <TouchableOpacity
+            onPress={() => refHabitDetailsSheet.current.open()}
+            key={habit.id}
+            style={styles.habitsContainer}>
             <Text style={styles.habits}>{habit.title}</Text>
             <View style={styles.dotMenu}>
               <Menu
@@ -41,8 +52,11 @@ const HabitsList = ({habits, handleDelete}) => {
                   </TouchableOpacity>
                 }>
                 <Menu.Item
-                  onPress={() => handleDelete(habit.id)}
-                  title="Delete"
+                  onPress={() => {
+                    refHabitDetailsSheet.current.open();
+                    closeMenu();
+                  }}
+                  title="View"
                 />
                 <Menu.Item
                   onPress={() => {
@@ -50,6 +64,10 @@ const HabitsList = ({habits, handleDelete}) => {
                     closeMenu();
                   }}
                   title="Edit"
+                />
+                <Menu.Item
+                  onPress={() => handleDelete(habit.id)}
+                  title="Delete"
                 />
               </Menu>
             </View>
@@ -78,7 +96,31 @@ const HabitsList = ({habits, handleDelete}) => {
                 close={handleCrateHabitSheetClose}
               />
             </RBSheet>
-          </View>
+            <RBSheet
+              ref={refHabitDetailsSheet}
+              closeOnDragDown={true}
+              height={449}
+              openDuration={500}
+              customStyles={{
+                wrapper: {
+                  backgroundColor: 'rgba(33, 37, 37, 0.5)',
+                },
+                draggableIcon: {
+                  width: 50,
+                  backgroundColor: '#F5F3FC',
+                  height: 3,
+                },
+                container: {
+                  borderTopLeftRadius: 20,
+                  borderTopRightRadius: 20,
+                },
+              }}>
+              <HabitDetails
+                close={() => refHabitDetailsSheet.current.close()}
+                task={habit}
+              />
+            </RBSheet>
+          </TouchableOpacity>
         ))}
       </View>
     </>

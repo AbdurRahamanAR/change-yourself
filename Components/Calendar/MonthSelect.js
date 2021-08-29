@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
   StyleSheet,
+  View,
 } from 'react-native';
 import {CURRENT_MONTH} from '../../App';
 
@@ -14,13 +15,14 @@ const MONTHS = moment.months();
 
 const MONTH_ITEM_WIDTH = 110;
 
-export default function MonthSelect({onChange, value}) {
+export default function MonthSelect({onChange, value, blockAfter, selectYear}) {
   const [monthRef, setMonthRef] = useState();
   const [selectMonth, setSelectMonth] = useState(value);
   const safeOnChange = useRef(onChange);
 
   useEffect(() => {
     if (monthRef) {
+      setSelectMonth(value);
       monthScrollHandler(value);
     }
   }, [value, monthScrollHandler, monthRef]);
@@ -57,6 +59,25 @@ export default function MonthSelect({onChange, value}) {
         const color =
           selectMonth === monthNo ? '#FF6E50' : 'rgba(4, 4, 5, 0.5)';
         const fontWeight = selectMonth === monthNo ? 'bold' : '500';
+        const shouldBlock =
+          monthNo > blockAfter.month && selectYear === blockAfter.year;
+        const disableColor = '#dddddd';
+
+        if (shouldBlock) {
+          return (
+            <View style={styles.monthButton} key={month}>
+              <Text
+                style={{
+                  ...styles.monthText,
+                  fontWeight,
+                  color: disableColor,
+                }}>
+                {month}
+              </Text>
+            </View>
+          );
+        }
+
         return (
           <TouchableOpacity
             style={styles.monthButton}
@@ -97,4 +118,5 @@ MonthSelect.defaultProps = {
 
 MonthSelect.propTypes = {
   onChange: PropTypes.func.isRequired,
+  blockAfter: PropTypes.object,
 };

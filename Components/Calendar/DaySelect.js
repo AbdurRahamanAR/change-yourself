@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Dimensions,
   StyleSheet,
+  View,
 } from 'react-native';
 import {CURRENT_YEAR, CURRENT_MONTH, TODAY_DATE} from '../../App';
 
@@ -31,6 +32,7 @@ export default function DaySelect({
   year = CURRENT_YEAR,
   value = TODAY_DATE,
   onChange,
+  blockAfter,
 }) {
   const [selectDay, setSelectDay] = useState(value);
   const [dateRef, setDateRef] = useState();
@@ -39,6 +41,7 @@ export default function DaySelect({
 
   useEffect(() => {
     if (dateRef) {
+      setSelectDay(value);
       dateScrollHandler(value);
     }
   }, [value, dateScrollHandler, dateRef]);
@@ -87,6 +90,36 @@ export default function DaySelect({
         const dayDateTextColor = selected ? '#fff' : '#000';
         const marginLeft = index === 0 ? 0 : DAY_BUTTON_MARGIN;
         const date = index + 1;
+
+        const shouldBlock =
+          blockAfter.date < date &&
+          month === blockAfter.month &&
+          year === blockAfter.year;
+        const disableColor = '#dddddd';
+
+        if (shouldBlock) {
+          return (
+            <View
+              key={month + day}
+              style={{...styles.dayButton, backgroundColor, marginLeft}}>
+              <Text
+                style={{
+                  color: disableColor,
+                  ...styles.dayNameText,
+                }}>
+                {moment(day).format('dd')[0]}
+              </Text>
+              <Text
+                style={{
+                  color: disableColor,
+                  ...styles.dayDateText,
+                }}>
+                {moment(day).format('DD')}
+              </Text>
+            </View>
+          );
+        }
+
         return (
           <TouchableOpacity
             onPress={e => handleSelectDay(date)}

@@ -7,7 +7,7 @@ import DaySelect from './DaySelect';
 import MonthSelect from './MonthSelect';
 import YearSelect from './YearSelect';
 
-export default function Calendar({onChange, value}) {
+export default function Calendar({onChange, value, blockAfter}) {
   const [selectMonth, setSelectMonth] = useState(value.month() + 1);
   const [selectYear, setSelectYear] = useState(value.year());
   const [selectDay, setSelectDay] = useState(value.date());
@@ -23,12 +23,22 @@ export default function Calendar({onChange, value}) {
     <View style={styles.root}>
       <YearSelect
         value={selectYear}
-        onChange={newYear => setSelectYear(newYear)}
+        onChange={newYear => {
+          setSelectYear(newYear);
+          setSelectMonth(1);
+          setSelectDay(1);
+        }}
+        blockAfter={blockAfter.year()}
       />
 
       <MonthSelect
         value={selectMonth}
-        onChange={newMonth => setSelectMonth(newMonth)}
+        onChange={newMonth => {
+          setSelectMonth(newMonth);
+          setSelectDay(1);
+        }}
+        selectYear={selectYear}
+        blockAfter={{year: blockAfter.year(), month: blockAfter.month() + 1}}
       />
 
       <DaySelect
@@ -36,6 +46,11 @@ export default function Calendar({onChange, value}) {
         year={selectYear}
         value={selectDay}
         onChange={newDay => setSelectDay(newDay)}
+        blockAfter={{
+          date: blockAfter.date(),
+          year: blockAfter.year(),
+          month: blockAfter.month() + 1,
+        }}
       />
     </View>
   );
@@ -47,11 +62,12 @@ const styles = StyleSheet.create({
   },
 });
 
-MonthSelect.defaultProps = {
+Calendar.defaultProps = {
   onChange: () => {},
 };
 
-MonthSelect.propTypes = {
+Calendar.propTypes = {
   onChange: PropTypes.func.isRequired,
   value: PropTypes.instanceOf(moment),
+  blockAfter: PropTypes.instanceOf(moment),
 };
