@@ -1,7 +1,5 @@
 3. Block calendar for future date
 4. Add realt data at view habit actiivity
-5. Finish add realData at Habit manager page
 6. connect with localstorate 
 7. fixing text styling
 8. Add color config
-9. fix currecny list data

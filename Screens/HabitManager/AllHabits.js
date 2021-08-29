@@ -1,10 +1,13 @@
+/* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {View, StyleSheet, TouchableOpacity, Text} from 'react-native';
 import HabitsList from './HabitsList';
 import {Menu} from 'react-native-paper';
 import Icon from '../../Components/Icon';
+import {useHabitList} from '../../Components/HabitProvider';
 
 export default function AllHabits() {
+  const {habitList, deleteHabit} = useHabitList();
   const [selectedValue, setSelectedValue] = useState('Archived');
 
   const [visible, setVisible] = useState(false);
@@ -13,21 +16,43 @@ export default function AllHabits() {
 
   return (
     <View style={styles.dropDownContainer}>
-      <View style={styles.dotMenu}>
-        <Menu
-          visible={visible}
-          onDismiss={closeMenu}
-          anchor={
-            <TouchableOpacity onPress={openMenu}>
-              <Text style={{fontSize: 14}}>Archived</Text>
+      <Menu
+        visible={visible}
+        onDismiss={closeMenu}
+        anchor={
+          <View style={styles.dotMenu}>
+            <TouchableOpacity
+              onPress={openMenu}
+              style={{
+                display: 'flex',
+                flexDirection: 'row',
+                alignItems: 'center',
+              }}>
+              <Text style={{fontSize: 14}}>{selectedValue}</Text>
               <Icon name="downArrow" size={10} />
             </TouchableOpacity>
-          }>
-          <Menu.Item onPress={() => {}} title="Delete" />
-          <Menu.Item onPress={() => {}} title="Edit" />
-        </Menu>
-      </View>
-      <HabitsList />
+          </View>
+        }>
+        <Menu.Item
+          onPress={() => {
+            setSelectedValue('All');
+          }}
+          title="All"
+        />
+        <Menu.Item
+          onPress={() => {
+            setSelectedValue('Completed');
+          }}
+          title="Completed"
+        />
+        <Menu.Item
+          onPress={() => {
+            setSelectedValue('Archived');
+          }}
+          title="Archived"
+        />
+      </Menu>
+      <HabitsList habits={habitList} handleDelete={deleteHabit} />
     </View>
   );
 }

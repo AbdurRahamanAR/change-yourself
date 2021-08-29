@@ -149,7 +149,6 @@ const HabitProvider = ({children}) => {
   );
 
   const addHabit = ({title, streak = 21, type, frequency}) => {
-    console.log(frequency, 'cool');
     setHabitList(state => {
       return [
         ...state,
@@ -172,7 +171,6 @@ const HabitProvider = ({children}) => {
   };
 
   const updateHabit = ({title, streak = 21, type, id, frequency}) => {
-    console.log(frequency, 'cool');
     setHabitList(state => {
       return state.map(item => {
         if (item.id === id) {
@@ -189,6 +187,12 @@ const HabitProvider = ({children}) => {
     });
   };
 
+  const deleteHabit = id => {
+    setHabitList(state => {
+      return state.filter(item => item.id !== id);
+    });
+  };
+
   return (
     <HabitContext.Provider
       value={{
@@ -198,6 +202,7 @@ const HabitProvider = ({children}) => {
         addHabit,
         getHabitListForADate,
         updateHabit,
+        deleteHabit,
       }}>
       {children}
     </HabitContext.Provider>

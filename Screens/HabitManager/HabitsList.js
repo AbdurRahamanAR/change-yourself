@@ -1,38 +1,80 @@
-import React, {useState} from 'react';
+import React, {useState, useRef} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import RBSheet from 'react-native-raw-bottom-sheet';
 import Icon from '../../Components/Icon';
-import habitData from './habitData.json';
 import {Menu} from 'react-native-paper';
+import AddHabitScreen from '../AddHabit';
 
-const HabitsList = () => {
+const HabitsList = ({habits, handleDelete}) => {
   const [visible, setVisible] = useState(false);
+  const refRBSheet = useRef();
+
+  const handleCrateHabitSheetClose = () => {
+    refRBSheet.current.close();
+  };
   const openMenu = name => setVisible(name);
   const closeMenu = () => setVisible(false);
 
   return (
-    <View style={styles.container}>
-      {habitData.map(habit => (
-        <View style={styles.habitsContainer}>
-          <Text style={styles.habits}>{habit.habitName}</Text>
-          <View style={styles.dotMenu}>
-            <Menu
-              visible={visible === habit.habitName}
-              onDismiss={closeMenu}
-              anchor={
-                <TouchableOpacity
+    <>
+      <View style={styles.container}>
+        {habits.map(habit => (
+          <View key={habit.id} style={styles.habitsContainer}>
+            <Text style={styles.habits}>{habit.title}</Text>
+            <View style={styles.dotMenu}>
+              <Menu
+                visible={visible === habit.title}
+                onDismiss={closeMenu}
+                anchor={
+                  <TouchableOpacity
+                    onPress={() => {
+                      openMenu(habit.title);
+                    }}>
+                    <Icon size={17} name="dotMenu" />
+                  </TouchableOpacity>
+                }>
+                <Menu.Item
+                  onPress={() => handleDelete(habit.id)}
+                  title="Delete"
+                />
+                <Menu.Item
                   onPress={() => {
-                    openMenu(habit.habitName);
-                  }}>
-                  <Icon size={17} name="dotMenu" />
-                </TouchableOpacity>
-              }>
-              <Menu.Item onPress={() => {}} title="Delete" />
-              <Menu.Item onPress={() => {}} title="Edit" />
-            </Menu>
+                    refRBSheet.current.open();
+                    closeMenu();
+                  }}
+                  title="Edit"
+                />
+              </Menu>
+            </View>
+            <RBSheet
+              ref={refRBSheet}
+              closeOnDragDown={true}
+              height={449}
+              openDuration={500}
+              customStyles={{
+                wrapper: {
+                  backgroundColor: 'rgba(33, 37, 37, 0.5)',
+                },
+                draggableIcon: {
+                  width: 50,
+                  backgroundColor: '#F5F3FC',
+                  height: 3,
+                },
+                container: {
+                  borderTopLeftRadius: 20,
+                  borderTopRightRadius: 20,
+                },
+              }}>
+              <AddHabitScreen
+                mode="update"
+                initialValues={habit}
+                close={handleCrateHabitSheetClose}
+              />
+            </RBSheet>
           </View>
-        </View>
-      ))}
-    </View>
+        ))}
+      </View>
+    </>
   );
 };
 export default HabitsList;

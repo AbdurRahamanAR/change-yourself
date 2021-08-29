@@ -1,11 +1,14 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
-import {View, Text} from 'react-native';
+import {View} from 'react-native';
+import {useHabitList} from '../../Components/HabitProvider';
 import HabitsList from './HabitsList';
 
 export default function InProgress() {
+  const {habitList, deleteHabit} = useHabitList();
   return (
     <View style={{flex: 1, backgroundColor: 'white'}}>
-      <HabitsList />
+      <HabitsList habits={habitList} handleDelete={deleteHabit} />
     </View>
   );
 }

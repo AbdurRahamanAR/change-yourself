@@ -105,7 +105,6 @@ export default function AddHabitScreen({
                       onChangeText={handleChange('title')}
                       onBlur={handleBlur('title')}
                       value={values.title}
-                      autoFocus
                       style={{
                         fontSize: 16,
                         lineHeight: 19,

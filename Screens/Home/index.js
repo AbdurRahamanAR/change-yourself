@@ -5,7 +5,6 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 
 import Calendar from '../../Components/Calendar';
-import HabitProvider from '../../Components/HabitProvider';
 import AddHabitScreen from '../AddHabit';
 import HabitList from './HabitList';
 import OverviewCard from './OverviewCard';
@@ -19,7 +18,7 @@ export default function Home() {
   };
 
   return (
-    <HabitProvider>
+    <View>
       <View style={{backgroundColor: '#fff', height: 800, padding: 16}}>
         <Text style={styles.headText}>
           Let’s make some {'\n'}great habit together
@@ -61,7 +60,7 @@ export default function Home() {
           <AddHabitScreen close={handleCrateHabitSheetClose} />
         </RBSheet>
       </View>
-    </HabitProvider>
+    </View>
   );
 }
 
