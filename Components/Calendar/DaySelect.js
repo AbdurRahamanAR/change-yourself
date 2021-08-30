@@ -10,6 +10,7 @@ import {
   View,
 } from 'react-native';
 import {CURRENT_YEAR, CURRENT_MONTH, TODAY_DATE} from '../../App';
+import {theme} from '../../config';
 
 export function getDaysArrayByMonth(monthNo, year) {
   var daysInMonth = moment(`${year} ${monthNo}`, 'YYYY MM').daysInMonth();
@@ -85,9 +86,11 @@ export default function DaySelect({
       }}>
       {days.map((day, index) => {
         const selected = selectDay === index + 1;
-        const backgroundColor = selected ? '#FF7648' : '#fff';
-        const dayNameTextColor = selected ? '#fff' : '#BCC1CD';
-        const dayDateTextColor = selected ? '#fff' : '#000';
+        const backgroundColor = selected ? '#FF7648' : theme.colors.white;
+        const dayNameTextColor = selected ? theme.colors.white : '#BCC1CD';
+        const dayDateTextColor = selected
+          ? theme.colors.white
+          : theme.colors.black;
         const marginLeft = index === 0 ? 0 : DAY_BUTTON_MARGIN;
         const date = index + 1;
 

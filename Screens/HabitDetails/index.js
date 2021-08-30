@@ -3,6 +3,7 @@ import moment from 'moment';
 import React from 'react';
 import {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
+import {useTheme} from 'react-native-paper';
 import Icon from '../../Components/Icon';
 import PercentageCircle from '../../Components/ProgressCricle';
 import AddHabitScreen from '../AddHabit';
@@ -10,6 +11,7 @@ import ActivityViewer from './ActivityViewer';
 import SummaryCard from './SummaryCard';
 
 export default function HabitDetails({task, close}) {
+  const {colors} = useTheme();
   const strength = Math.round((task.continue / task.streak) * 100);
   const [edit, setEdit] = useState(false);
 
@@ -41,7 +43,7 @@ export default function HabitDetails({task, close}) {
               fontFamily: 'Gilroy-Bold',
               fontSize: 16,
               lineHeight: 24,
-              color: '#FF6E50',
+              color: colors.primary,
             }}>
             Edit
           </Text>

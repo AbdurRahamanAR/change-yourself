@@ -10,12 +10,14 @@ import {
   View,
 } from 'react-native';
 import {CURRENT_MONTH} from '../../App';
+import {useTheme} from 'react-native-paper';
 
 const MONTHS = moment.months();
 
 const MONTH_ITEM_WIDTH = 110;
 
 export default function MonthSelect({onChange, value, blockAfter, selectYear}) {
+  const {colors} = useTheme();
   const [monthRef, setMonthRef] = useState();
   const [selectMonth, setSelectMonth] = useState(value);
   const safeOnChange = useRef(onChange);
@@ -57,11 +59,10 @@ export default function MonthSelect({onChange, value, blockAfter, selectYear}) {
       {MONTHS.map((month, index) => {
         const monthNo = index + 1;
         const color =
-          selectMonth === monthNo ? '#FF6E50' : 'rgba(4, 4, 5, 0.5)';
+          selectMonth === monthNo ? colors.primary : colors.textSecondary;
         const fontWeight = selectMonth === monthNo ? 'bold' : '500';
         const shouldBlock =
           monthNo > blockAfter.month && selectYear === blockAfter.year;
-        const disableColor = '#dddddd';
 
         if (shouldBlock) {
           return (
@@ -70,7 +71,7 @@ export default function MonthSelect({onChange, value, blockAfter, selectYear}) {
                 style={{
                   ...styles.monthText,
                   fontWeight,
-                  color: disableColor,
+                  color: colors.disabled,
                 }}>
                 {month}
               </Text>

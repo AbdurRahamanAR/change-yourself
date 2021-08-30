@@ -9,6 +9,7 @@ import IntroSlider from './Components/IntroSlider';
 import Navigation from './navigation/index';
 import useStorageState from './hooks/useStorageState';
 import {STORAGE_KEY} from './constest';
+import {theme} from './config';
 
 export const TODAY_MOMENT = moment();
 export const CURRENT_MONTH = TODAY_MOMENT.month() + 1;
@@ -29,7 +30,7 @@ const App = () => {
   }
 
   return (
-    <Provider>
+    <Provider theme={theme}>
       <HabitProvider>
         <View style={{flex: 1, height: '100%'}}>
           {showIntro ? (

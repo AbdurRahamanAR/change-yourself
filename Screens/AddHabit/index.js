@@ -13,6 +13,7 @@ import {Formik} from 'formik';
 import HabitDatePickerFormItem from './HabitDatePickerFormItem';
 import HabitTypePickerFormIitem from './HabitTypePickerFormIitem';
 import {useHabitList} from '../../Components/HabitProvider';
+import {useTheme} from 'react-native-paper';
 
 export const habit_types = {
   DO: 'do',
@@ -54,6 +55,7 @@ export default function AddHabitScreen({
   initialValues = defaultInitialValues,
   mode,
 }) {
+  const {colors} = useTheme();
   const isUpdateMode = mode === 'update';
   const {addHabit, updateHabit} = useHabitList();
   const [step, setStep] = useState(1);
@@ -205,7 +207,7 @@ export default function AddHabitScreen({
               }
             }}
             style={{
-              backgroundColor: '#FF6E50',
+              backgroundColor: colors.primary,
               height: 56,
               borderRadius: 10,
               justifyContent: 'center',

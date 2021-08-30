@@ -1,2 +1,11 @@
-7. fixing text styling
-8. Add color config
+1. fixing text styling
+2. Add color config
+3. Add logo
+4. Add flash screen
+5. finish all habit page
+6. Add do don't tag
+7. Finish shop page 
+8. Change bottom modal component
+9. block scrolling in year select
+10. fix icon
+11. Nan% fix

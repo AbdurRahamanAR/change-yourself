@@ -1,3 +1,4 @@
+/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 import {TouchableOpacity} from 'react-native-gesture-handler';
@@ -13,7 +14,7 @@ export default function AddHabitScreen() {
   return (
     <View
       style={{
-        backgroundColor: '#fff',
+        backgroundColor: theme.colors.white,
         height: '100%',
         paddingTop: 45,
         paddingHorizontal: 16,
@@ -48,7 +49,8 @@ export default function AddHabitScreen() {
           justifyContent: 'center',
           alignItems: 'center',
         }}>
-        <Text style={{color: '#fff', fontSize: 16, fontWeight: '600'}}>
+        <Text
+          style={{color: theme.colors.white, fontSize: 16, fontWeight: '600'}}>
           Done
         </Text>
       </TouchableOpacity>

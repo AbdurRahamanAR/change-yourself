@@ -4,6 +4,7 @@ import {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {habit_types} from '.';
 import Icon from '../../Components/Icon';
+import {theme} from '../../config';
 
 export default function HabitTypePickerFormIitem({
   value,
@@ -32,7 +33,7 @@ export default function HabitTypePickerFormIitem({
                 {
                   marginRight: 20,
                   borderWidth: selectedType === type ? 1.5 : 0,
-                  borderColor: '#FF6E50',
+                  borderColor: theme.colors.primary,
                 },
               ]}>
               <Icon name={icon} />
@@ -56,7 +57,7 @@ export default function HabitTypePickerFormIitem({
 
 const styles = StyleSheet.create({
   button: {
-    backgroundColor: '#F5F5F7',
+    backgroundColor: theme.colors.accent,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',

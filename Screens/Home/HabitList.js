@@ -3,6 +3,7 @@ import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import {useHabitList} from '../../Components/HabitProvider';
 import Icon from '../../Components/Icon';
+import {theme} from '../../config';
 import HabitDetails from '../HabitDetails';
 
 export default function HabitList({calenderDate}) {
@@ -38,7 +39,7 @@ export default function HabitList({calenderDate}) {
               <Icon
                 name="correct-square"
                 size={20}
-                color={complete ? '#FF6E50' : '#F5F3FC'}
+                color={complete ? theme.colors.primary : '#F5F3FC'}
               />
 
               <Text style={styles.title}>{task.title}</Text>
@@ -110,13 +111,13 @@ const styles = StyleSheet.create({
   streakStatusProgressBar: {
     marginTop: 11,
     width: '100%',
-    backgroundColor: '#F5F5F7',
+    backgroundColor: theme.colors.accent,
     height: 5,
     borderRadius: 32,
   },
   streakStatusProgressBarProgress: {
     maxWidth: '100%',
-    backgroundColor: '#FF6E50',
+    backgroundColor: theme.colors.primary,
     height: 5,
     borderRadius: 32,
   },

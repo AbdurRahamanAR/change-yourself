@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import {Text, ScrollView, StyleSheet, View, Dimensions} from 'react-native';
 import {CURRENT_YEAR, CURRENT_MONTH} from '../../App';
 import {useCallback} from 'react';
+import {useTheme} from 'react-native-paper';
 
 export function getDaysArrayByMonth(monthNo, year) {
   var daysInMonth = moment(`${year} ${monthNo}`, 'YYYY MM').daysInMonth();
@@ -27,6 +28,7 @@ export default function ActivityViewer({
   year = CURRENT_YEAR,
   data,
 }) {
+  const {colors} = useTheme();
   const [days, setDays] = useState([]);
   const [dateRef, setDateRef] = useState();
 
@@ -79,14 +81,14 @@ export default function ActivityViewer({
             }}>
             <Text
               style={{
-                color: isToday ? '#FF6E50' : '#BCC1CD',
+                color: isToday ? colors.primary : '#BCC1CD',
                 ...styles.dayNameText,
               }}>
               {moment(day).format('dd')[0]}
             </Text>
             <Text
               style={{
-                color: isToday ? '#FF6E50' : '#000',
+                color: isToday ? colors.primary : '#000',
                 ...styles.dayDateText,
               }}>
               {moment(day).format('DD')}
@@ -94,7 +96,7 @@ export default function ActivityViewer({
             <View
               style={[
                 styles.indecator,
-                {backgroundColor: data[index] ? '#FF6E50' : '#fff'},
+                {backgroundColor: data[index] ? colors.primary : '#fff'},
               ]}
             />
           </View>

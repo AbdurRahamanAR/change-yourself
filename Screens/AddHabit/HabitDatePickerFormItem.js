@@ -1,6 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState} from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
+import {useTheme} from 'react-native-paper';
 import {ErrroMessageViewer} from '.';
 import Icon from '../../Components/Icon';
 
@@ -20,6 +21,7 @@ export default function HabitDatePickerFormItem({
   onChange,
   error,
 }) {
+  const {colors} = useTheme();
   const [selectedDay, setSelectedDay] = useState(value);
 
   const handleSelectDay = (index, active) => {
@@ -50,7 +52,7 @@ export default function HabitDatePickerFormItem({
                 width: 33,
                 height: 35,
                 marginRight: 15,
-                backgroundColor: active ? '#FF6E50' : '#F5F5F7',
+                backgroundColor: active ? colors.primary : colors.accent,
                 borderRadius: 5,
                 justifyContent: 'center',
                 alignItems: 'center',
@@ -89,7 +91,7 @@ export default function HabitDatePickerFormItem({
           <Icon
             name="correct-square"
             size={20}
-            color={selectedDay.length === 7 ? '#FF6E50' : '#F5F3FC'}
+            color={selectedDay.length === 7 ? colors.primary : '#F5F3FC'}
           />
           <Text style={{marginLeft: 12}}>Repeat Everyday</Text>
         </TouchableOpacity>

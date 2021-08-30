@@ -6,6 +6,7 @@ import {View, Text, StyleSheet} from 'react-native';
 import {useHabitList} from '../../Components/HabitProvider';
 
 import PercentageCircle from '../../Components/ProgressCricle';
+import {theme} from '../../config';
 import {calculateParsentige} from '../../utils';
 
 export default function OverviewCard({todayList}) {
@@ -54,7 +55,7 @@ const styles = StyleSheet.create({
   root: {
     width: '100%',
     height: 95,
-    backgroundColor: '#FF6E50',
+    backgroundColor: theme.colors.primary,
     borderRadius: 12,
     paddingTop: 14,
     paddingLeft: 21,

@@ -4,6 +4,7 @@ import {StyleSheet, Text, View} from 'react-native';
 import Icon from '../Components/Icon';
 import HabitManager from '../Screens/HabitManager';
 import Home from '../Screens/Home';
+import {useTheme} from 'react-native-paper';
 
 const Tab = createBottomTabNavigator();
 
@@ -20,7 +21,8 @@ const TabDataList = [
   },
 ];
 
-const bottomTabs = () => {
+const BottomTabs = () => {
+  const {colors} = useTheme();
   return (
     <Tab.Navigator
       screenOptions={{
@@ -49,7 +51,7 @@ const bottomTabs = () => {
                 paddingTop: 12,
               },
               tabBarIcon: ({focused}) => {
-                const color = focused ? '#FF6E50' : 'rgba(4, 4, 5, 0.4)';
+                const color = focused ? colors.primary : colors.textSecondary;
                 return (
                   <View style={styles.tabItemRoot}>
                     <Icon size={24} name={item.iconName} color={color} />
@@ -77,4 +79,4 @@ const styles = StyleSheet.create({
   tabLabel: {marginTop: 5},
 });
 
-export default bottomTabs;
+export default BottomTabs;

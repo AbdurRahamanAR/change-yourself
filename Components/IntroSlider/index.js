@@ -9,6 +9,7 @@ import {
   Text,
 } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
+import {useTheme} from 'react-native-paper';
 import Icon from '../Icon';
 
 const slides = [
@@ -34,6 +35,7 @@ const slides = [
 
 export default function IntroSlider({onDone}) {
   const sliderRef = useRef();
+  const {colors} = useTheme();
 
   const handleOnDone = () => {
     if (onDone && typeof onDone !== 'function') {
@@ -69,7 +71,7 @@ export default function IntroSlider({onDone}) {
                 style={[
                   styles.dot,
                   i === activeIndex
-                    ? {backgroundColor: '#FF6E50'}
+                    ? {backgroundColor: colors.primary}
                     : {backgroundColor: 'rgba(255, 110, 80, 0.1)'},
                 ]}
                 onPress={() => sliderRef.current?.goToSlide(i, true)}
@@ -81,7 +83,7 @@ export default function IntroSlider({onDone}) {
             style={[
               styles.nextButton,
               {
-                backgroundColor: '#FF6E50',
+                backgroundColor: colors.primary,
               },
             ]}>
             <TouchableOpacity
@@ -95,7 +97,7 @@ export default function IntroSlider({onDone}) {
               height: 54,
               width: '100%',
               borderRadius: 10,
-              backgroundColor: '#FF6E50',
+              backgroundColor: colors.primary,
               marginTop: 39,
               display: 'flex',
               justifyContent: 'center',
@@ -149,7 +151,7 @@ const styles = StyleSheet.create({
   },
   paginationContainer: {
     position: 'absolute',
-    top: 580,
+    top: 560,
     left: 16,
     right: 16,
     alignItems: 'center',

@@ -1,8 +1,11 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, Text} from 'react-native';
+import {useTheme} from 'react-native-paper';
 
 export default function SummaryCard({currentStreak, bestStreak}) {
+  const {colors} = useTheme();
+
   return (
     <View
       style={{
@@ -20,7 +23,7 @@ export default function SummaryCard({currentStreak, bestStreak}) {
             fontFamily: 'Gilroy-Bold',
             fontSize: 18,
             lineHeight: 23,
-            color: '#FF6E50',
+            color: colors.primary,
           }}>
           {currentStreak} Days
         </Text>
@@ -42,7 +45,7 @@ export default function SummaryCard({currentStreak, bestStreak}) {
             fontFamily: 'Gilroy-Bold',
             fontSize: 18,
             lineHeight: 23,
-            color: '#FF6E50',
+            color: colors.primary,
           }}>
           {bestStreak} Days
         </Text>
