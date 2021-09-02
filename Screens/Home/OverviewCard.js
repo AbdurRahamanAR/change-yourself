@@ -26,6 +26,8 @@ export default function OverviewCard({todayList}) {
     habitList.length,
   );
 
+  console.log(completed, habitList.length);
+
   return (
     <View style={styles.root}>
       <View>

@@ -8,5 +8,8 @@ export function padding(top, right, bottom, left) {
 }
 
 export const calculateParsentige = (pEarned, pPos) => {
+  if (isNaN(pEarned / pPos)) {
+    return 0;
+  }
   return Math.round((pEarned / pPos) * 100);
 };
