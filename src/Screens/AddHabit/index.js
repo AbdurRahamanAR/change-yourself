@@ -12,7 +12,7 @@ import {Formik} from 'formik';
 
 import HabitDatePickerFormItem from './HabitDatePickerFormItem';
 import HabitTypePickerFormIitem from './HabitTypePickerFormIitem';
-import {useHabitList} from '../../Components/HabitProvider';
+import {useHabitList} from '../../Provider/HabitProvider';
 import {useTheme} from 'react-native-paper';
 
 export const habit_types = {

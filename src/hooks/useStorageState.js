@@ -23,9 +23,9 @@ const useStorageState = (
   const handleSetState = value => {
     const valueIsFunction = typeof value === 'function';
     const orgValue = valueIsFunction ? value(state) : value;
-    storeData(key, orgValue).then(() => {
-      setState(orgValue);
-    });
+    setState(orgValue);
+    // TODO: check for faliar
+    storeData(key, orgValue);
   };
 
   return [state, handleSetState];

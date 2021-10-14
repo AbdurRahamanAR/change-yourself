@@ -4,7 +4,7 @@ import {ActivityIndicator, View} from 'react-native';
 import moment from 'moment';
 import {Provider} from 'react-native-paper';
 
-import HabitProvider from './Components/HabitProvider';
+import HabitProvider from './Provider/HabitProvider';
 import IntroSlider from './Components/IntroSlider';
 import Navigation from './navigation/index';
 import useStorageState from './hooks/useStorageState';

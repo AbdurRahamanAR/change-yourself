@@ -1,7 +1,7 @@
 import React, {useMemo, useRef, useState} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import {useHabitList} from '../../Components/HabitProvider';
+import {useHabitList} from '../../Provider/HabitProvider';
 import Icon from '../../Components/Icon';
 import {theme} from '../../config';
 import HabitDetails from '../HabitDetails';
@@ -17,7 +17,7 @@ export default function HabitList({calenderDate}) {
     return calenderDate.date();
   }, [calenderDate]);
   const refRBSheet = useRef();
-  const [selectedTask, setSelectedTask] = useState();
+  const [selectedTask] = useState();
   const {getHabitListForADate, checkHabit} = useHabitList();
 
   const habitList = getHabitListForADate(calenderDate);

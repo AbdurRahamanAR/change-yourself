@@ -50,14 +50,14 @@ export const isDateInFrequency = (frequency, date) => {
 
 const HabitProvider = ({children}) => {
   const resetContinueDone = useRef(false);
-  const lastmonth = Array(31);
-  lastmonth[30] = true;
 
   const [habitList, setHabitList] = useStorageState(
     STORAGE_KEY.HABITS,
     [],
     data => (data ? data : []),
   );
+
+  console.log(habitList);
 
   useEffect(() => {
     if (!resetContinueDone.current && habitList.length > 0) {
@@ -83,10 +83,11 @@ const HabitProvider = ({children}) => {
           const operationType = dateListData[DATE - 1]
             ? 'unchecked'
             : 'checked';
-          item.continue =
+          const newContinueValue =
             operationType === 'unchecked'
               ? item.continue - 1
               : item.continue + 1;
+          item.continue = newContinueValue;
           if (item.continue > item.bestStreak) {
             item.bestStreak = item.continue;
           }
@@ -98,6 +99,7 @@ const HabitProvider = ({children}) => {
               [MONTH]: dateListData,
             },
           };
+          item.completed = item.streak === newContinueValue;
         }
         return item;
       });

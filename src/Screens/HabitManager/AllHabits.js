@@ -1,8 +1,7 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View, StyleSheet} from 'react-native';
 import HabitsList from './HabitsList';
-import {useHabitList} from '../../Components/HabitProvider';
+import {useHabitList} from '../../Provider/HabitProvider';
 
 export default function AllHabits() {
   const {habitList, deleteHabit} = useHabitList();

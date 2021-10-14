@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import {View} from 'react-native';
-import {useHabitList} from '../../Components/HabitProvider';
+import {useHabitList} from '../../Provider/HabitProvider';
 import HabitsList from './HabitsList';
 
 export default function InProgress() {

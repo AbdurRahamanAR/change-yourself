@@ -3,7 +3,7 @@ import React, {useMemo} from 'react';
 import {useEffect} from 'react';
 import {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
-import {useHabitList} from '../../Components/HabitProvider';
+import {useHabitList} from '../../Provider/HabitProvider';
 
 import PercentageCircle from '../../Components/ProgressCricle';
 import {theme} from '../../config';
