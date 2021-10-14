@@ -3,7 +3,8 @@ import React from 'react';
 import {useState} from 'react';
 import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import {habit_types} from '.';
-import Icon from '../../Components/Icon';
+import WrongIcon from '../../Components/WrongIcon';
+import CorrectIcon from '../../Components/CorrectIcon';
 import {theme} from '../../config';
 
 export default function HabitTypePickerFormIitem({
@@ -17,8 +18,6 @@ export default function HabitTypePickerFormIitem({
     <View style={{flexDirection: 'row', ...style}}>
       {Object.keys(habit_types).map(item => {
         const type = habit_types[item];
-        const icon =
-          type === habit_types.DO ? 'correct-filled' : 'wrong-filled';
         const text = type === habit_types.DO ? 'To-do' : 'Not to-do';
         return (
           <TouchableOpacity
@@ -36,7 +35,7 @@ export default function HabitTypePickerFormIitem({
                   borderColor: theme.colors.primary,
                 },
               ]}>
-              <Icon name={icon} />
+              {type === habit_types.DO ? <CorrectIcon /> : <WrongIcon />}
               <Text
                 s
                 style={{
