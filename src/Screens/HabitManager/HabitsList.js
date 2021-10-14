@@ -1,12 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useRef} from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Touchable,
-} from 'react-native';
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import Icon from '../../Components/Icon';
 import {Menu} from 'react-native-paper';
@@ -21,7 +15,7 @@ const HabitsList = ({habits, handleDelete}) => {
   const handleCrateHabitSheetClose = () => {
     refRBSheet.current.close();
   };
-  const openMenu = name => setVisible(name);
+  const openMenu = id => setVisible(id);
   const closeMenu = () => setVisible(false);
 
   return (
@@ -35,7 +29,7 @@ const HabitsList = ({habits, handleDelete}) => {
             <Text style={styles.habits}>{habit.title}</Text>
             <View style={styles.dotMenu}>
               <Menu
-                visible={visible === habit.title}
+                visible={visible === habit.id}
                 onDismiss={closeMenu}
                 anchor={
                   <TouchableOpacity
@@ -46,7 +40,7 @@ const HabitsList = ({habits, handleDelete}) => {
                       flexDirection: 'row',
                     }}
                     onPress={() => {
-                      openMenu(habit.title);
+                      openMenu(habit.id);
                     }}>
                     <Icon size={17} name="dotMenu" />
                   </TouchableOpacity>
@@ -133,6 +127,7 @@ const styles = StyleSheet.create({
   },
   dotMenu: {
     marginLeft: 'auto',
+    zIndex: 1000,
   },
   habitsContainer: {
     paddingTop: 32,
