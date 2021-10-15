@@ -2,25 +2,9 @@ import React from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {StyleSheet, Text, View} from 'react-native';
 import Icon from '../Components/Icon';
-// import HabitManager from '../Screens/HabitManager';
-// import Home from '../Screens/Home';
+import HabitManager from '../Screens/HabitManager';
+import Home from '../Screens/Home';
 import {useTheme} from 'react-native-paper';
-
-function Home() {
-  return (
-    <View>
-      <Text>From home</Text>
-    </View>
-  );
-}
-
-function HabitManager() {
-  return (
-    <View>
-      <Text>Habit HabitManager</Text>
-    </View>
-  );
-}
 
 const Tab = createBottomTabNavigator();
 
