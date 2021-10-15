@@ -1,13 +1,13 @@
 package com.change_yourself;
 
+import org.devio.rn.splashscreen.SplashScreen;
+import android.os.Bundle;
 import com.facebook.react.ReactActivity;
-import org.devio.rn.splashscreen.SplashScreen; // import this
-import android.os.Bundle; // import this
 
 public class MainActivity extends ReactActivity {
-  @Override
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
-        SplashScreen.show(this);  // here
+        SplashScreen.show(this, R.style.SplashStatusBarTheme);
         super.onCreate(savedInstanceState);
     }
 
