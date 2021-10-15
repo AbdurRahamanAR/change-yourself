@@ -1,6 +1,12 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useState, useRef} from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 import Icon from '../../Components/Icon';
 import {Menu} from 'react-native-paper';
@@ -19,8 +25,8 @@ const HabitsList = ({habits, handleDelete}) => {
   const closeMenu = () => setVisible(false);
 
   return (
-    <>
-      <View style={styles.container}>
+    <View>
+      <ScrollView showsVerticalScrollIndicator={false} style={styles.container}>
         {habits.map(habit => (
           <TouchableOpacity
             onPress={() => refHabitDetailsSheet.current.open()}
@@ -116,8 +122,8 @@ const HabitsList = ({habits, handleDelete}) => {
             </RBSheet>
           </TouchableOpacity>
         ))}
-      </View>
-    </>
+      </ScrollView>
+    </View>
   );
 };
 export default HabitsList;

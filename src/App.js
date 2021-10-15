@@ -1,7 +1,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React, {useEffect} from 'react';
 import SplashScreen from 'react-native-splash-screen';
-import {ActivityIndicator, View} from 'react-native';
+import {ActivityIndicator, SafeAreaView, View} from 'react-native';
 import moment from 'moment';
 import {Provider} from 'react-native-paper';
 
@@ -35,17 +35,19 @@ const App = () => {
   }
 
   return (
-    <Provider theme={theme}>
-      <HabitProvider>
-        <View style={{flex: 1, height: '100%'}}>
-          {showIntro ? (
-            <Navigation />
-          ) : (
-            <IntroSlider onDone={() => setShowIntro(true)} />
-          )}
-        </View>
-      </HabitProvider>
-    </Provider>
+    <SafeAreaView style={{flex: 1}}>
+      <Provider theme={theme}>
+        <HabitProvider>
+          <View style={{flex: 1, height: '100%'}}>
+            {showIntro ? (
+              <Navigation />
+            ) : (
+              <IntroSlider onDone={() => setShowIntro(true)} />
+            )}
+          </View>
+        </HabitProvider>
+      </Provider>
+    </SafeAreaView>
   );
 };
 

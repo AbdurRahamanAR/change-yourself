@@ -1,7 +1,14 @@
 /* eslint-disable react-native/no-inline-styles */
 import moment from 'moment';
 import React, {useState, useRef} from 'react';
-import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  StyleSheet,
+  ScrollView,
+  Dimensions,
+} from 'react-native';
 import RBSheet from 'react-native-raw-bottom-sheet';
 
 import Calendar from '../../Components/Calendar';
@@ -31,13 +38,25 @@ export default function Home() {
           }}
           blockAfter={moment()}
         />
-        <HabitList calenderDate={selectDate} />
-        <TouchableOpacity
-          onPress={() => {
-            refRBSheet.current.open();
+
+        <View
+          style={{
+            height: Dimensions.get('window').height - 480,
+            marginTop: 20,
           }}>
-          <Text style={styles.addHabitButText}>+ Add a habit</Text>
-        </TouchableOpacity>
+          <ScrollView
+            showsVerticalScrollIndicator={false}
+            showsHorizonalScrollIndicator={false}>
+            <HabitList calenderDate={selectDate} />
+            <TouchableOpacity
+              style={{marginBottom: 30}}
+              onPress={() => {
+                refRBSheet.current.open();
+              }}>
+              <Text style={styles.addHabitButText}>+ Add a habit</Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
 
         <RBSheet
           ref={refRBSheet}

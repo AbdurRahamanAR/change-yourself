@@ -1,10 +1,8 @@
-import React, {useMemo, useRef, useState} from 'react';
+import React, {useMemo} from 'react';
 import {View, Text, TouchableOpacity, StyleSheet} from 'react-native';
-import RBSheet from 'react-native-raw-bottom-sheet';
 import {useHabitList} from '../../Provider/HabitProvider';
 import Icon from '../../Components/Icon';
 import {theme} from '../../config';
-import HabitDetails from '../HabitDetails';
 
 export default function HabitList({calenderDate}) {
   const YEAR = useMemo(() => {
@@ -16,8 +14,6 @@ export default function HabitList({calenderDate}) {
   const DATE = useMemo(() => {
     return calenderDate.date();
   }, [calenderDate]);
-  const refRBSheet = useRef();
-  const [selectedTask] = useState();
   const {getHabitListForADate, checkHabit} = useHabitList();
 
   const habitList = getHabitListForADate(calenderDate);
@@ -58,30 +54,6 @@ export default function HabitList({calenderDate}) {
           </TouchableOpacity>
         );
       })}
-      <RBSheet
-        ref={refRBSheet}
-        closeOnDragDown={true}
-        height={449}
-        openDuration={500}
-        customStyles={{
-          wrapper: {
-            backgroundColor: 'rgba(33, 37, 37, 0.5)',
-          },
-          draggableIcon: {
-            width: 50,
-            backgroundColor: '#F5F3FC',
-            height: 3,
-          },
-          container: {
-            borderTopLeftRadius: 20,
-            borderTopRightRadius: 20,
-          },
-        }}>
-        <HabitDetails
-          close={() => refRBSheet.current.close()}
-          task={selectedTask}
-        />
-      </RBSheet>
     </View>
   );
 }
