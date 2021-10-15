@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import {useTheme} from 'react-native-paper';
-import Icon from '../Icon';
+import NextIcon from '../NextIcon';
 
 const slides = [
   {
@@ -53,7 +53,9 @@ export default function IntroSlider({onDone}) {
   const renderItem = ({item}) => {
     return (
       <View style={styles.slide}>
-        <Image style={styles.image} source={item.image} />
+        <View style={styles.imageBox}>
+          <Image style={styles.image} source={item.image} />
+        </View>
         <Text style={styles.title}>{item.title}</Text>
         <Text style={styles.text}>{item.text}</Text>
       </View>
@@ -88,7 +90,7 @@ export default function IntroSlider({onDone}) {
             ]}>
             <TouchableOpacity
               onPress={() => sliderRef.current.goToSlide(activeIndex + 1)}>
-              <Icon name="fancy_arrow_right" color="#fff" size={27} />
+              <NextIcon />
             </TouchableOpacity>
           </View>
         ) : (
@@ -130,6 +132,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
+    width: '100%',
+    height: '100%',
+    resizeMode: 'center',
+  },
+  imageBox: {
     width: Dimensions.get('window').width,
     maxWidth: 300,
     maxHeight: 225,
