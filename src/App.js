@@ -1,5 +1,6 @@
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, {useEffect} from 'react';
+import SplashScreen from 'react-native-splash-screen';
 import {ActivityIndicator, View} from 'react-native';
 import moment from 'moment';
 import {Provider} from 'react-native-paper';
@@ -24,6 +25,10 @@ const App = () => {
       return data ? true : false;
     },
   );
+
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
 
   if (showIntro === undefined) {
     return <ActivityIndicator />;
