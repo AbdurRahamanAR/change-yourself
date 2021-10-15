@@ -1,6 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="blue">#FF6E50</color>
-    <color name="primary_dark">#FF6E50</color>
-    <color name="background">#FF6E50</color>
+    <color name="primary_color">#FF6E50</color>
 </resources>

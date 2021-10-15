@@ -4,7 +4,7 @@ import BottomTabs from './BottomTabs';
 
 const NavigationTheme = {
   colors: {
-    background: 'white',
+    background: '#fff',
   },
 };
 

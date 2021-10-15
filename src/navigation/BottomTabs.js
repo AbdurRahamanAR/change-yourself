@@ -29,7 +29,6 @@ const BottomTabs = () => {
         tabBarShowLabel: false,
         tabBarStyle: {
           height: 70,
-          backgroundColor: '#fff',
           borderTopWidth: 0,
           elevation: 0,
         },
@@ -42,12 +41,12 @@ const BottomTabs = () => {
             component={item.component}
             options={{
               topBar: {
-                backgroundColor: '#FFFFFF',
+                backgroundColor: '#fff',
               },
               headerShown: false,
               tabBarItemStyle: {
-                paddingBottom: 11,
-                paddingTop: 12,
+                height: 70,
+                backgroundColor: '#fff',
               },
               tabBarIcon: ({focused}) => {
                 const color = focused ? colors.primary : colors.textSecondary;
@@ -70,6 +69,9 @@ const styles = StyleSheet.create({
   tabItemRoot: {
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: '#fff',
+    width: '100%',
+    height: '100%',
   },
   tabItemItem: {
     width: 25,
@@ -77,5 +79,4 @@ const styles = StyleSheet.create({
   },
   tabLabel: {marginTop: 5},
 });
-
 export default BottomTabs;
